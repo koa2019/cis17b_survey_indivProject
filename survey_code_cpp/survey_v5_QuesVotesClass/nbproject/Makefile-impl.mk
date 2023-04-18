@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=survey_v4_QuesStruct2Binary
+PROJECTNAME=survey_v5_QuesVotesClass
 
 # Active Configuration
 DEFAULTCONF=Debug

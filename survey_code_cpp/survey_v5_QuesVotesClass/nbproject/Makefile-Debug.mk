@@ -61,11 +61,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v4_quesstruct2binary.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v5_quesvotesclass.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v4_quesstruct2binary.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v5_quesvotesclass.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v4_quesstruct2binary ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/survey_v5_quesvotesclass ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/Admin.o: Admin.cpp
 	${MKDIR} -p ${OBJECTDIR}
