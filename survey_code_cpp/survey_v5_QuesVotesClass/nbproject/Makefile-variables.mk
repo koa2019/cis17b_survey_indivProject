@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=survey_v4_quesstruct2binary
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/survey_v4_quesstruct2binary
+CND_ARTIFACT_NAME_Debug=survey_v5_quesvotesclass
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/survey_v5_quesvotesclass
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=surveyv4quesstruct2binary.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/surveyv4quesstruct2binary.tar
+CND_PACKAGE_NAME_Debug=surveyv5quesvotesclass.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/surveyv5quesvotesclass.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=survey_v4_quesstruct2binary
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/survey_v4_quesstruct2binary
+CND_ARTIFACT_NAME_Release=survey_v5_quesvotesclass
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/survey_v5_quesvotesclass
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=surveyv4quesstruct2binary.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/surveyv4quesstruct2binary.tar
+CND_PACKAGE_NAME_Release=surveyv5quesvotesclass.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/surveyv5quesvotesclass.tar
 #
 # include compiler specific variables
 #
