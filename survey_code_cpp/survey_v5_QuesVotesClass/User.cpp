@@ -11,6 +11,7 @@ using namespace std;  //STD Name-space where Library is compiled
 
 User::User(){   
     //cout<<"\nHit User Default constructor\n";
+    //cout<<"\tNUMQQ=" << NUMQQ << endl;
     readNumRec();  
     namSiz=0;
     name="";
@@ -35,7 +36,7 @@ User::User(int rec){
     email="";
     pwrdSiz=0;
     password="";  
-    hiScore=0;
+    hiScore=NUMQQ;
 }
 
 
@@ -54,7 +55,7 @@ User::User(string n){
     email="";
     pwrdSiz=0;
     password=""; 
-    hiScore=0;
+    hiScore=NUMQQ;
     //printUsr();
 }
 
@@ -70,7 +71,7 @@ User::User(string n, string e, string p){
     setName(n);
     setEmail(e);
     setPwrd(p);
-    hiScore=0;
+    hiScore=NUMQQ;
     wrtTxt();
     wrtBin();
     addNumRec(); // increment total # of profiles created       
@@ -89,7 +90,7 @@ void User::wrtVotes(){
    
     outTxt << "votes[" ;
     for(int i=0; i < hiScore; i++){    
-        outTxt << votes.getVoteIndx(i);
+        outTxt << votes.getVote(i);
         if( !(i == (hiScore-1))){ outTxt << ','; }
     }    
     outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
@@ -118,16 +119,62 @@ void User::wrtTxt(){
     outTxt<<"email:   "<<email<<endl;  // write this string to text file
     outTxt<<"pwrdSiz: "<<pwrdSiz<<endl; // write the size of this string to text file
     outTxt<<"pwrd:    "<<password<<endl;// write this string to text file 
-    outTxt<<"hiScore: "; 
+    outTxt<<"votSiz:  "; 
     outTxt<< (hiScore/100) << (hiScore/10%10) << (hiScore%10) <<endl; 
     outTxt << "votes[";
     for(int i=0; i < NUMQQ; i++){    
-        outTxt << votes.getVoteIndx(i);
+        outTxt << votes.getVote(i);
         if( !(i == (NUMQQ-1))){ outTxt << ','; }
     }    
     outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
     outTxt.close(); // close file
 }
+
+
+/******************************************************************/              
+//                  REWRITE 1 RECORD in Text FILE    
+//          Important! When you change # bits in any variable it 
+//                  will effect rewriting it in text file
+/*****************************************************************/
+
+void User::reWrtTxt(long begnFile){
+        
+    //cout<<"\n\nHit reWrtTxt()  recSize= "<<recSiz<<"  begnFile = "<<begnFile<<endl;
+    
+    fstream outTxt; 
+    outTxt.open("usrData.txt", ios::ate | ios::in | ios::out ); // appends content to the current content of the file.
+    if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n";}
+
+    
+    int numChar = 76+1;
+    int charCount = (getNumRec()==0) ? 0 : ((numChar)*getNumRec());    
+    //cout<<"\ncharCount = "<< charCount <<endl;
+    
+    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits  
+    //cout<<"begnFile = "<< cursor <<endl;
+    
+    
+    outTxt.seekp(cursor,ios::beg);  // Sets the position of the get pointer
+       
+    outTxt<<endl;
+    outTxt<<"Record   "<<numRec<<endl;
+    outTxt<<"namSiz:  "<<getNamSiz()<<endl; // write the size of this string to text file
+    outTxt<<"name:    "<<getName()<<endl;   // write this string to text file
+    outTxt<<"emaiSiz: "<<getEmaiSiz()<<endl;// write the size of this string to text file
+    outTxt<<"email:   "<<getEmail()<<endl;  // write this string to text file
+    outTxt<<"pwrdSiz: "<<getPwrdSiz()<<endl; // write the size of this string to text file
+    outTxt<<"pwrd:    "<<getPwrd()<<endl;// write this string to text file 
+    outTxt<<"votSiz:  "; 
+    outTxt<< (getHiScore()/100) << (getHiScore()/10%10) << (getHiScore()%10) <<endl;
+    outTxt << "votes[";
+    for(int i=0; i < NUMQQ; i++){    
+        outTxt << votes.getVote(i);
+        if( !(i == (NUMQQ-1))){ outTxt << ','; }
+    }    
+    outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
+    outTxt.close(); // close file    
+}
+
 
 
 /******************************************************************/              
@@ -140,7 +187,7 @@ void User::wrtBin(){
     outBin.open("usrData.dat",ios::out | ios::app | ios::binary); // appends content to the current content of the file.
     if(!outBin.is_open()){ cout<<"\nError opening usrData.dat\n";}
     
-    // Write total records to binary file
+    // Write numRec to binary file
     outBin.write(reinterpret_cast<char *>(&numRec) , sizeof(int)); 
     
        
@@ -163,54 +210,15 @@ void User::wrtBin(){
      
     // Write hiScore to binary file
     outBin.write(reinterpret_cast<char *>(&hiScore) , sizeof(int)); 
+    
+    // Write each element in Votes array
+    for(int i=0; i < NUMQQ; i++){
+        
+        int num = votes.getVote(i);
+        outBin.write(reinterpret_cast<char *>(&num) , sizeof(int));
+    }
      
     outBin.close(); // close file    
-}
-
-
-
-/******************************************************************/              
-//                  REWRITE 1 RECORD in Text FILE    
-//          Important! When you change # bits in any variable it 
-//                  will effect rewriting it in text file
-/*****************************************************************/
-
-void User::reWrtTxt(long begnFile){
-        
-    //cout<<"\n\nHit reWrtTxt()  recSize= "<<recSiz<<"  begnFile = "<<begnFile<<endl;
-    
-    fstream outTxt; 
-    outTxt.open("usrData.txt", ios::ate | ios::in | ios::out ); // appends content to the current content of the file.
-    if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n";}
-
-    
-    int numChar = 76+14;
-    int charCount = (getNumRec()==0) ? 0 : ((numChar)*getNumRec());    
-    //cout<<"\ncharCount = "<< charCount <<endl;
-    
-    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits  
-    //cout<<"begnFile = "<< cursor <<endl;
-    
-    
-    outTxt.seekp(cursor,ios::beg);  // Sets the position of the get pointer
-       
-    outTxt<<endl;
-    outTxt<<"Record   "<<numRec<<endl;
-    outTxt<<"namSiz:  "<<getNamSiz()<<endl; // write the size of this string to text file
-    outTxt<<"name:    "<<getName()<<endl;   // write this string to text file
-    outTxt<<"emaiSiz: "<<getEmaiSiz()<<endl;// write the size of this string to text file
-    outTxt<<"email:   "<<getEmail()<<endl;  // write this string to text file
-    outTxt<<"pwrdSiz: "<<getPwrdSiz()<<endl; // write the size of this string to text file
-    outTxt<<"pwrd:    "<<getPwrd()<<endl;// write this string to text file 
-    outTxt<<"hiScore: "; 
-    outTxt<< (getHiScore()/100) << (getHiScore()/10%10) << (getHiScore()%10) <<endl;
-    outTxt << "votes[";
-    for(int i=0; i < hiScore; i++){    
-        outTxt << votes.getVoteIndx(i);
-        if( !(i == (hiScore-1))){ outTxt << ','; }
-    }    
-    outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
-    outTxt.close(); // close file    
 }
 
 
@@ -220,8 +228,9 @@ void User::reWrtTxt(long begnFile){
 
 void User::reWrtBin(long begnFile){
       
-    //cout<<"\n\n Hit reWrtBin()  begnFile = " << begnFile << endl;
-    //cout<<"\n\nHit reWrtBin()  recSize = "<< recSiz << "  begnFile = " << begnFile <<endl;
+    cout<<"\n\n Hit reWrtBin()  begnFile = " << begnFile << endl;
+     
+    printUsrRec();
     
     fstream outBin; 
     outBin.open("usrData.dat", ios::ate | ios::in | ios::out | ios::binary); // appends content to the current content of the file.
@@ -257,6 +266,26 @@ void User::reWrtBin(long begnFile){
     
     // Rewrite hiScore in binary file     
     outBin.write(reinterpret_cast<char *>(&hiScore) , sizeof(int)); 
+    
+    
+    // Write each element in Votes array
+    for(int i=0; i < NUMQQ; i++){
+        
+        int num = votes.getVote(i);
+        outBin.write(reinterpret_cast<char *>(&num) , sizeof(int));
+    }
+    
+//    int num0 = votes.getVote(0);
+//    cout<<"\n" << num0 << " ";
+//    outBin.write(reinterpret_cast<char *>(&num0) , sizeof(int));
+//    
+//    int num1 = votes.getVote(1);
+//    cout << num1 << " ";
+//    outBin.write(reinterpret_cast<char *>(&num1) , sizeof(int));
+//    
+//    int num2 = votes.getVote(2);
+//    cout << num2 << endl;
+//    outBin.write(reinterpret_cast<char *>(&num2) , sizeof(int));
     
     outBin.close(); // close file  
     
@@ -574,11 +603,17 @@ void User::printUsr()const{
         <<"Name:       "<< name   <<endl
         <<"Email:      "<< email  <<endl
         <<"Password:   "<<password<<endl;
-    
-    for(int i=0; i < pwrdSiz;i++){
+    int i;
+    for(i=0; i < pwrdSiz;i++){
         cout<<"*";
     }
-    cout<<"\nHigh Score: "<<hiScore<<endl;
+    cout<<"\nVoteSiz: " << hiScore <<endl;
+    cout<<"votes[";
+    for(int i=0; i < NUMQQ; i++){    
+        cout << votes.getVote(i);
+        if( !(i == (NUMQQ-1))){ cout<<','; }
+    }    
+    cout << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
 }
 
 /*****************************************************************/
@@ -594,7 +629,14 @@ void User::printUsrRec() const{
         <<"Email:      "<< email   <<endl
         <<"PwrdSiz:    "<< pwrdSiz <<endl
         <<"Password:   "<< password<<endl
-        <<"High Score: "<< hiScore<<endl;
+        <<"VoteSiz:    "<< hiScore<<endl;
+   
+    cout<<"votes[";
+    for(int i=0; i < NUMQQ; i++){    
+        cout << votes.getVote(i);
+        if( !(i == (NUMQQ-1))){ cout<<','; }
+    }    
+    cout << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
 }
 
 
@@ -647,8 +689,8 @@ void User::readInputFile(){
     User usera("homer simpson","homer@simp.com","Homer!23");
     User userb("marge simpson","marge@simp.com","Marge$ab");
     User userc("lisa simpson","lisa@simp.com","Lisa!2345");   
-    User userd("day tripper","lucy@beatles.com","DayT#2345"); 
-    User usere("harry potter","harry@potter.com","Harry!23");
+    //User userd("day tripper","lucy@beatles.com","DayT#2345"); 
+    //User usere("harry potter","harry@potter.com","Harry!23");
    
     // Open & read input.txt
 //    readIn.open("input.txt", ios::in); // Delete contents in file    

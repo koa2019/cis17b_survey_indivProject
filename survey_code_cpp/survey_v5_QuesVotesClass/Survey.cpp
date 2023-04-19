@@ -12,12 +12,11 @@ using namespace std;
 //*********************************************************
 //              Default Constructor
 //*********************************************************
-Survey::Survey(){
-    
-    cout<<"\n Hit Survey Default Constructor\n";
-    isTrue = false;
-    
+Survey::Survey(){    
+    //cout<<"\n Hit Survey Default Constructor\n";
+    isTrue = false;    
 }
+
 
 //*********************************************************
 //              Destructor
@@ -58,7 +57,7 @@ bool Survey::start(User &user, const long recordLoc){
 
     
     int ans = 0, count = 0;
-    //cout<<"\n\tgetVoteIndx=" << votes.getVoteIndx(3) << endl;
+    //cout<<"\n\tgetVote=" << votes.getVote(3) << endl;
     
     // Loop through total number of questions
     for(int i=0; i < NUMQQ; i++){
@@ -77,8 +76,8 @@ bool Survey::start(User &user, const long recordLoc){
         
         // Reset votes object. Each indx represents their answer
         user.votes.setVoteIndx(i,ans);
-        user.votes.increNumVote();   // Accumulate total votes for this user   
-        //cout<<"\n\tgetVoteIndx=" << votes.getVoteIndx(3) << endl;
+        user.votes.increNumVote();  
+        //cout<<"\n\t getVote=" << votes.getVote(3) << endl;
     }
     
     // Print this user's voting results
@@ -87,11 +86,6 @@ bool Survey::start(User &user, const long recordLoc){
     
     isTrue = true; // set flag
 
-    cout<<"\tNUMQQ=" << NUMQQ << endl;
-    // Reset user's hiSCore and update binary & text file            
-    user.setHiScore(NUMQQ);
-    
-    //cout << "\n\tNew High Score of " << user.getHiScore() << "!\n";
 
      if(!isTrue){ // if player 1 is NOT winner
         
@@ -102,19 +96,11 @@ bool Survey::start(User &user, const long recordLoc){
         
         //rewrite this record in binary & text files  
         user.reWrtBin(recordLoc); 
-        cout << "\nUser is updating binary file...."; 
+        cout << "\nUser is updating binary file....";
         return isTrue; // return true and Admin will confirm files were rewritten
     }
 }
 
-//*********************************************************
-//
-//*********************************************************
-
-
-//*********************************************************
-//
-//*********************************************************
 
 //******************************************
 //      pause screen before continuing

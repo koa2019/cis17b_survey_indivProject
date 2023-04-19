@@ -26,8 +26,9 @@ protected:
     
 public:
     
-    Votes votes; // Array holds how many votes each option received
-                // for this question & total sum of all votes for this question
+    Votes votes; // Holds user's answer for each question
+    
+    
     User();   // Default constructor
     User(int); // Constructor 2
     User(string); // Constructor #3
@@ -57,14 +58,11 @@ public:
     void readInputFile();  // Reads 27 records from a file
     
     
-    // Validates user input before setting member variable
+    // Helper functions for validating member variables      
     bool isName();
     bool isEmail();
     bool isPwrd();
     bool isHiScore(int);
-    
-    
-    // Helper functions for validating member variables      
     bool isMinSize(string, int size = 2);
     bool isStrEqual(string, string);
     bool hasSpecialChars(string);
@@ -88,9 +86,7 @@ public:
     unsigned short getPwrdSiz() const {return pwrdSiz;}
     string getName() const {return name;}
     string getEmail() const {return email;}
-    string getPwrd() const { return password; }
-    
-    
+    string getPwrd() const { return password; }   
     void printUsr() const;  // User friendly print out
     void printUsrRec() const;  // prints each string's size    
 };
