@@ -6,7 +6,7 @@
  * 
  * v1:
  * Admin inherits User
- * Added admin readBin(), wrtAdminTxt() & wrtAdminBin()
+ * Added admin readBin_setArray(), wrtAdminTxt() & wrtAdminBin()
  * Fixed bug: Admin is crashing. Added a cout inside ~Admin().
  * Added 3 constructors for User. 
  * Added recSize & begnFile variables to Admin so it could  
@@ -54,13 +54,18 @@
    of Votes, then rewrites hiScore in start().
  * Moved Votes class to User class public members. This way I can access votes
  * functions without writing extra get() in User class.
- * Printed Votes object in User:wrtVotes(); 
- * 
- * 
+ * Printed Votes object in User:wrtVotes();  
+ * Wrote Votes[] to userData.txt file. Added 14 chars to charCount in reWrtTxt().
+ * When User is logged in, Votes array within User is written 
+   to binary and read it from binary. correctly. It writes and rewrites to text file.
+   You can't loop through votes while reading from binary cause it messes it up.
+ * I realized i wasn't setPwrd() inside of readBin_setArray(). idk how it still worked? lol
+ * Case 4 in adminPortal() calls editVotes();
+ * Inside of editVotes() and delete() I added usrArr[ind]-> to readBin_setArray().
  * 
  * 
  To Do: 
- * When User is logged in write Votes array to their record. 
+ * add all votes for each question to Votes survySums and print histogram;
  * Make readInput() read inputs from file again 
  * Add a bool variable to Admin as a flag for deleted records?
  
@@ -86,9 +91,6 @@ using namespace std;  //STD Name-space where Library is compiled
 
 //Global Constants not Variables
 //Math/Physics/Science/Conversions/Dimensions
-
-//Function Prototypes
-void getMenu();
 
 
 //Code Begins Execution Here with function main
@@ -141,8 +143,8 @@ int main(int argc, char** argv) {
                     // Create new User & copy admin values to user                    
                     admin.copy2Usr(user,indx);    
                     cout << "\nWelcome " << user.getName();
-                    user.printUsr(); 
-                    
+                    //user.printUsr(); 
+                    admin.printAdUsr(user.getNumRec()); 
                
                     
                     // Create new instance of NewClass class
@@ -155,12 +157,17 @@ int main(int argc, char** argv) {
                     // if user is winner & has new hiScore, then print their update record
                     if(survey.start(user, recordLoc)) {                         
                         
-                        //cout<<"\n\ninside main() user object looks like: ";
-                        //user.printUsr();                       
-                          
-                        admin.readAllUsrs();
-                        cout << "Admin is reading updated binary file....\n";
+                        cout<<"\n\ninside main() user object looks like: ";
+                        user.printUsrRec();                       
                         admin.printAdUsr(user.getNumRec());   
+                          
+                        //rewrite this record in binary & text files  
+                        //user.reWrtBin(recordLoc); 
+                        //cout << "\nUser is updating binary file...."; 
+        
+                        admin.readBin_setArray();
+                        cout << "\nAdmin is reading updated binary file....\n";
+                        admin.printAdUsr(user.getNumRec());
                     }                                                    
                 }
                 break;
@@ -193,19 +200,3 @@ int main(int argc, char** argv) {
 //*********************************************************
 //              Function Definitions
 //*********************************************************
-
-void getMenu(){
-    
-    int choice = 0;
-    
-    cout<<"\n\n\tMenu\n"
-        <<"1: Admin Login\n"
-        <<"2: Sign Up\n"
-        <<"3: User Login\n"
-        <<"4: Take Survey as a guest\n"
-        <<"5: ReadInputFile()\n"
-        <<"9: Exit\n"
-        <<"Enter a number: ";
-               
-       
-}

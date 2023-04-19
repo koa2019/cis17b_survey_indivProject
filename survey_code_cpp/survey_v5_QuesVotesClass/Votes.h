@@ -5,7 +5,8 @@
 
 #ifndef VOTES_H
 #define VOTES_H
-#include <iostream>
+#include <iostream>  // cout
+#include <iomanip>  // setw()
 using namespace std;
 
 
@@ -28,18 +29,24 @@ class Votes {
     }
     
     // Accessors
-    void setVoteIndx(int i, int value){ 
-        
-        votes[i] = value; 
-    }
-    
-    //int getVoteIndx() const { return votes[i]; }
-    int getVoteIndx(int i) const { return votes[i]; }
+//    void setVotArray(int a, int b, int c){
+//        votes[0] = a;
+//        votes[1] = b;
+//        votes[3] = c;
+//    }
+    void setVoteIndx(int i, int value){ votes[i] = value; } 
+    int getVote(int i) const { return votes[i]; }
     int getNumVote() const { return numVote; }
     void increNumVote(){ numVote++; }
     
     // Mutator
-    void prntVotes()const;
+    void prntVotes()const {
+        cout<<"\n\tSurvey Results\n";
+        cout << "\nQuestion 1: voted for #" << votes[0];
+        cout << "\nQuestion 2: voted for #"  << votes[1];
+        cout << "\nQuestion 3: voted for #"  << votes[2]<<endl;
+        cout<<setw(22)<<"Total votes:"<<setw(2)<< numVote <<"\n"; 
+    }
 };
 
 
