@@ -18,7 +18,7 @@ User::User(){
     email="";
     pwrdSiz=0;
     password="";  
-    hiScore=0;
+    hiScore=0;        
 }
 
 /*****************************************************************/
@@ -83,13 +83,19 @@ User::User(string n, string e, string p){
 
 void User::wrtVotes(){
     ofstream outTxt; 
-    outTxt.open("surveyResults.txt", ios::out | ios::app); // appends content to the current content of the file.
+    outTxt.open("surveyResults.txt", ios::out); // appends content to the current content of the file.
     if(!outTxt.is_open()){ cout<<"\nError opening surveyResults.txt\n"; exit(0);}    
     
-    for(int i=0; i < hiScore; i++){
-        cout << votes.getVoteIndx(i) << " ";
-    }
-    cout << "\nTotal number of votes: " << votes.getNumVote() << endl;
+   
+    outTxt << "votes[" ;
+    for(int i=0; i < hiScore; i++){    
+        outTxt << votes.getVoteIndx(i);
+        if( !(i == (hiScore-1))){ outTxt << ','; }
+    }    
+    outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
+            
+    //outTxt << "NumVotes: " << votes.getNumVote() << endl;
+    //cout << "\nTotal number of votes: " << votes.getNumVote() << endl;
     
     outTxt.close();
 }
@@ -114,6 +120,12 @@ void User::wrtTxt(){
     outTxt<<"pwrd:    "<<password<<endl;// write this string to text file 
     outTxt<<"hiScore: "; 
     outTxt<< (hiScore/100) << (hiScore/10%10) << (hiScore%10) <<endl; 
+    outTxt << "votes[";
+    for(int i=0; i < NUMQQ; i++){    
+        outTxt << votes.getVoteIndx(i);
+        if( !(i == (NUMQQ-1))){ outTxt << ','; }
+    }    
+    outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
     outTxt.close(); // close file
 }
 
@@ -170,16 +182,15 @@ void User::reWrtTxt(long begnFile){
     fstream outTxt; 
     outTxt.open("usrData.txt", ios::ate | ios::in | ios::out ); // appends content to the current content of the file.
     if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n";}
+
     
-    //cout<<"\ngetNumRec() = "<<getNumRec()<<endl;
-    
-    int charCount = (getNumRec()==0) ? 0 : ((76)*getNumRec());
-    
+    int numChar = 76+14;
+    int charCount = (getNumRec()==0) ? 0 : ((numChar)*getNumRec());    
     //cout<<"\ncharCount = "<< charCount <<endl;
     
-    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits
-    
+    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits  
     //cout<<"begnFile = "<< cursor <<endl;
+    
     
     outTxt.seekp(cursor,ios::beg);  // Sets the position of the get pointer
        
@@ -193,6 +204,12 @@ void User::reWrtTxt(long begnFile){
     outTxt<<"pwrd:    "<<getPwrd()<<endl;// write this string to text file 
     outTxt<<"hiScore: "; 
     outTxt<< (getHiScore()/100) << (getHiScore()/10%10) << (getHiScore()%10) <<endl;
+    outTxt << "votes[";
+    for(int i=0; i < hiScore; i++){    
+        outTxt << votes.getVoteIndx(i);
+        if( !(i == (hiScore-1))){ outTxt << ','; }
+    }    
+    outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
     outTxt.close(); // close file    
 }
 
