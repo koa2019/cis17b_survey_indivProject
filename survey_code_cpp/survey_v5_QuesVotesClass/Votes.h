@@ -5,23 +5,41 @@
 
 #ifndef VOTES_H
 #define VOTES_H
+#include <iostream>
+using namespace std;
+
+
+const int NUMQQ = 3;
+const int VOTESIZE = NUMQQ+1;
 
 class Votes {
     
 //protected:
     public:
-        int q1;      // Array holds how many votes each option received
-        int q2;             // for this question & total sum of all votes for this question
-        int q3;
-        int totalVotes;
+    int votes[NUMQQ]; // Array holds how many votes each option received
+    int numVote;
     
         // Default constructor
     Votes(){ 
-        q1=0;
-        q2=0;
-        q3=0;
-        totalVotes=0;
+        numVote = 0;
+        for(int i=0; i < NUMQQ; i++){
+            votes[i] = 0;
+        }
     }
+    
+    // Accessors
+    void setVoteIndx(int i, int value){ 
+        
+        votes[i] = value; 
+    }
+    
+    //int getVoteIndx() const { return votes[i]; }
+    int getVoteIndx(int i) const { return votes[i]; }
+    int getNumVote() const { return numVote; }
+    void increNumVote(){ numVote++; }
+    
+    // Mutator
+    void prntVotes()const;
 };
 
 

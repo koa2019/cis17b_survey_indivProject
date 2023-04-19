@@ -1,6 +1,7 @@
-build/Debug/Cygwin-Windows/main.o: main.cpp User.h Admin.h Question.h \
- Votes.h
+build/Debug/Cygwin-Windows/main.o: main.cpp User.h Votes.h Admin.h \
+ Survey.h Question.h
 User.h:
-Admin.h:
-Question.h:
 Votes.h:
+Admin.h:
+Survey.h:
+Question.h:

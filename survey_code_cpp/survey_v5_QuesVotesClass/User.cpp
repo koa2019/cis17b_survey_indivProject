@@ -1,9 +1,9 @@
-using namespace std;  //STD Name-space where Library is compiled
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "User.h"
-
+#include "Survey.h"
+using namespace std;  //STD Name-space where Library is compiled
 
 /*****************************************************************/
 //                Default Constructor
@@ -77,6 +77,22 @@ User::User(string n, string e, string p){
     wrtNumRec(); 
 }
 
+/******************************************************************/              
+//                  WRITE 1 RECORD TO TEXT FILE     
+/*****************************************************************/
+
+void User::wrtVotes(){
+    ofstream outTxt; 
+    outTxt.open("surveyResults.txt", ios::out | ios::app); // appends content to the current content of the file.
+    if(!outTxt.is_open()){ cout<<"\nError opening surveyResults.txt\n"; exit(0);}    
+    
+    for(int i=0; i < hiScore; i++){
+        cout << votes.getVoteIndx(i) << " ";
+    }
+    cout << "\nTotal number of votes: " << votes.getNumVote() << endl;
+    
+    outTxt.close();
+}
 
 /******************************************************************/              
 //                  WRITE 1 RECORD TO TEXT FILE     

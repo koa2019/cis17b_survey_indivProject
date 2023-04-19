@@ -14,7 +14,7 @@ using namespace std;
 class Question {
     
 protected: 
-    bool isTrue;
+ 
     string ques; // question
     string op1; // answer 1 option
     string op2; // answer 2 option
@@ -26,7 +26,7 @@ public:
     Question(string,string,string,string); // Constructor #3
     
     // Destructor
-    ~Question();
+    //~Question();
     
     // Mutator
     void setQA(string,string,string,string);
@@ -40,10 +40,9 @@ public:
     string getOp1(){return op1;}
     string getOp2(){return op2;}
     string getOp3(){return op3;}
-    void prntQA();
-    bool start(User &, const long);
-    void prntVotes(Votes);
-    void pause(char ch='c');
+    void prnt1QA();
+  
+
     
 };
 #endif /* QUESTION_H */

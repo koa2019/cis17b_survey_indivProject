@@ -49,22 +49,16 @@
  * 
  v5:
  * Update this version with store_v1.4's User and Admin Classes.
+ * Moving start() from Question.cpp to Survey.cpp
+ * Survey class creates array of Question and aggregates instance
+   of Votes, then rewrites hiScore in start().
+ * Moved Votes class to User class public members.
+  Printed votes[] in User:wrtVotes(); Created
  * 
  * 
  To Do: 
- 
- * Make Survey class create an array of Votes, then write to files. Print chart.
- * 
- * Figure out how to pass Questions array to other functions with its cpp page.
- 
- * When User is logged in write Votes array to their record.
- 
- * Make getAllUsr() print outside of its function
-  
- * Destroy double ptr in Yahtzee class & in Admin class?
- 
- * Make readInput() read inputs from file again
- 
+ * When User is logged in write Votes array to their record. 
+ * Make readInput() read inputs from file again 
  * Add a bool variable to Admin as a flag for deleted records?
  
  * DRY. Clean up repetitive code.
@@ -84,8 +78,7 @@ using namespace std;  //STD Name-space where Library is compiled
 //User Libraries
 #include "User.h"
 #include "Admin.h"
-//#include "Survey.h"
-#include "Question.h"
+#include "Survey.h"
 
 
 //Global Constants not Variables
@@ -137,9 +130,9 @@ int main(int argc, char** argv) {
                 int indx = admin.isUsrLogin();
                 if(!(indx == -66)){
                     
-                    cout<<"\n\nUser login was successful.\n"; 
-                    cout<<"\ninside main() admin1 object looks like: ";
-                    admin.printAdUsr(indx);                    
+                    cout<<"\nUser login was successful.\n"; 
+                    //cout<<"\ninside main() admin1 object looks like: ";
+                    //admin.printAdUsr(indx);                    
                     
                     
                     // Create new User & copy admin values to user                    
@@ -148,7 +141,7 @@ int main(int argc, char** argv) {
                     user.printUsr(); 
                     
                     // Create new instance of NewClass class
-                    Question survey;
+                    Survey survey;
                                  
                     long recordLoc = admin.getBegnFile(indx);
                     
@@ -161,8 +154,8 @@ int main(int argc, char** argv) {
                         //user.printUsr();                       
                           
                         admin.readAllUsrs();
-                        cout << "\nAdmin is reading updated binary file....\n";
-                        admin.printAdUsr(user.getNumRec());   
+                        //cout << "\nAdmin is reading updated binary file....\n";
+                        //admin.printAdUsr(user.getNumRec());   
                     }                                                    
                 }
                 break;
@@ -172,7 +165,7 @@ int main(int argc, char** argv) {
                 User guest("Guest"); 
                 //cout<<"\ninside main() guest user object looks like: ";
                 guest.printUsr();
-                Question survey2; // Calls default constructor
+                Survey survey2; // Calls default constructor
                 //survey2.prntQA();
                 survey2.start(guest,0); 
                 break;
