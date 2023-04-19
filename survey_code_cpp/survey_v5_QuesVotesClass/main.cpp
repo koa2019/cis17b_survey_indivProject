@@ -52,8 +52,11 @@
  * Moving start() from Question.cpp to Survey.cpp
  * Survey class creates array of Question and aggregates instance
    of Votes, then rewrites hiScore in start().
- * Moved Votes class to User class public members.
-  Printed votes[] in User:wrtVotes(); Created
+ * Moved Votes class to User class public members. This way I can access votes
+ * functions without writing extra get() in User class.
+ * Printed Votes object in User:wrtVotes(); 
+ * 
+ * 
  * 
  * 
  To Do: 
@@ -140,6 +143,8 @@ int main(int argc, char** argv) {
                     cout << "\nWelcome " << user.getName();
                     user.printUsr(); 
                     
+               
+                    
                     // Create new instance of NewClass class
                     Survey survey;
                                  
@@ -154,8 +159,8 @@ int main(int argc, char** argv) {
                         //user.printUsr();                       
                           
                         admin.readAllUsrs();
-                        //cout << "\nAdmin is reading updated binary file....\n";
-                        //admin.printAdUsr(user.getNumRec());   
+                        cout << "Admin is reading updated binary file....\n";
+                        admin.printAdUsr(user.getNumRec());   
                     }                                                    
                 }
                 break;

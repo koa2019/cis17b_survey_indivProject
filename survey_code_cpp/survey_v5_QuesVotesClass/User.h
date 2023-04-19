@@ -35,6 +35,8 @@ public:
     User(int,string,string,string);
     ~User(){cout<<"\nHit User Destructor()."; }
     
+    // Call Votes class functions
+    void wrtVotes();
     
     // Mutators
     void readNumRec();   // Read total number of records from file & set numRec
@@ -48,11 +50,7 @@ public:
     void setPwrd(string str){  password = str; pwrdSiz = password.size();}
     void setHiScore(int s) { hiScore = s; }
     
-    // Call Votes class functions
-    //void setVote(int i, int ans) { votes.setVoteIndx(i,ans); }
-    //void callIncreVotes() { votes.increVotes();}
-    //void callPrntVotes()const { votes.prntVotes(); }
-    void wrtVotes();
+    
     
     // Create new User 
     void signUp();  // Calls functions to create 1 or more profiles

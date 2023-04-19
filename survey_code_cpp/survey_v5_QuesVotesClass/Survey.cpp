@@ -82,11 +82,12 @@ bool Survey::start(User &user, const long recordLoc){
     }
     
     // Print this user's voting results
-    user.votes.prntVotes();
-    user.wrtVotes();
+    //user.votes.prntVotes();
+    //user.wrtVotes();
     
     isTrue = true; // set flag
 
+    cout<<"\tNUMQQ=" << NUMQQ << endl;
     // Reset user's hiSCore and update binary & text file            
     user.setHiScore(NUMQQ);
     
@@ -99,9 +100,9 @@ bool Survey::start(User &user, const long recordLoc){
     }
     else { 
         
-        // rewrite this record in binary & text files  
-        //user.reWrtBin(recordLoc); 
-        //cout << "\nUser is updating binary file...."; 
+        //rewrite this record in binary & text files  
+        user.reWrtBin(recordLoc); 
+        cout << "\nUser is updating binary file...."; 
         return isTrue; // return true and Admin will confirm files were rewritten
     }
 }
