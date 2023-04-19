@@ -1,168 +1,126 @@
-//#include <string>
-//#include <array>
-//#include <iostream> // cout
-//#include <fstream> // fstream
-//#include <iomanip> // setw()
-//#include "Survey.h"
-//#include "Question.h"
-//using namespace std;
-//
-//
-////*********************************************************
-////              Default Constructor
-////*********************************************************
-//Question::Question(){
-//    
-//    cout<<"\n Hit Question Default Constructor\n";
-//
-//    size = 4;
-//    qusAns = new string[size];
-//    votes = new int[size];
-//     
-//    // Read 1 question and answers from file    
-//    fstream in;
-//    in.open("surveyQA.txt", ios::in);
-//    if(in.fail()){ cout<<"\nError opening survey.txt\n"; exit(0); }
-//        
-//    for(int j=0; j < size; j++){            
-//        getline(in, qusAns[j]);
-//        votes[j] = 0;
-//        cout<<votes[j]<< " ";
-//        cout<<qusAns[j]<<endl;
-//    }
-//  
-//    in.close();
+#include <string>
+#include <array>
+#include <iostream> // cout
+#include <fstream> // fstream
+#include <iomanip> // setw()
+#include "Survey.h"
+#include "Question.h"
+#include "Votes.h" 
+using namespace std;
+
+
+//*********************************************************
+//              Default Constructor
+//*********************************************************
+Survey::Survey(){
+    
+    cout<<"\n Hit Survey Default Constructor\n";
+    isTrue = false;
+    
+}
+
+//*********************************************************
+//              Destructor
+//*********************************************************
+//Survey::~Survey(){
+//     cout << "\n******Change Survey Destructor*****\n";
+//    //delete [] qusAns;
+//    //delete [] votes;
 //}
+
+//*********************************************************
+//          Start survey
+//*********************************************************
+bool Survey::start(User &user, const long recordLoc){
+     
+    //cout<<"\n Hit Question Constructor #2\n";
+    fstream in;
+    in.open("surveyQA.txt", ios::in);
+    if(in.fail()){ cout<<"\nError opening surveyQA.txt\n"; exit(0); }
+
+
+    int i = 0;
+    string str0 = "", str1 = "", str2 = "", str3 = "";
+     
+    // Reset question class object    
+    while(!in.eof()){        
+        
+        getline(in,str0);
+        getline(in,str1);
+        getline(in,str2);
+        getline(in,str3);
+
+        question[i].setQA(str0,str1,str2,str3);
+        //question[i].prntQA();
+        i++;
+    }     
+    in.close();
+
+    
+    int ans = 0, count = 0;
+    //cout<<"\n\tgetVoteIndx=" << votes.getVoteIndx(3) << endl;
+    
+    // Loop through total number of questions
+    for(int i=0; i < NUMQQ; i++){
+        
+       
+        do {  // Validate user input
+            
+            question[i].prnt1QA(); // Ask Questions
+            cin >> ans;           // Read answer
+            
+            if(!( ans >= 1 && ans <= 3 )) { 
+                cout<<"Invalid input. Try again...\n"; 
+            }
+            
+        } while (!( ans >= 1 && ans <= 3 ));
+        
+        // Reset votes object. Each indx represents their answer
+        user.votes.setVoteIndx(i,ans);
+        user.votes.increNumVote();   // Accumulate total votes for this user   
+        //cout<<"\n\tgetVoteIndx=" << votes.getVoteIndx(3) << endl;
+    }
+    
+    // Print this user's voting results
+    user.votes.prntVotes();
+    user.wrtVotes();
+    
+    isTrue = true; // set flag
+
+    // Reset user's hiSCore and update binary & text file            
+    user.setHiScore(NUMQQ);
+    
+    //cout << "\n\tNew High Score of " << user.getHiScore() << "!\n";
+
+     if(!isTrue){ // if player 1 is NOT winner
+        
+        cout<<"\n\nHiScore was NOT updated!\n"; 
+        return false; 
+    }
+    else { 
+        
+        // rewrite this record in binary & text files  
+        //user.reWrtBin(recordLoc); 
+        //cout << "\nUser is updating binary file...."; 
+        return isTrue; // return true and Admin will confirm files were rewritten
+    }
+}
+
+//*********************************************************
 //
+//*********************************************************
+
+
+//*********************************************************
 //
-////*********************************************************
-////                   Constructor #2
-////*********************************************************
-//Question::Question(string q, string a, string b, string c){ 
-//    
-//    //cout<<"\n Hit Question Constructor #2\n";
-//
-//    size = 4;
-//    
-//    qusAns = new string[size];     
-//    votes = new int[size];
-//    
-//    qusAns[0] = q;
-//    qusAns[1] = a;
-//    qusAns[2] = b;
-//    qusAns[3] = c;    
-//    
-//    for(int j=0; j < size; j++){ 
-//        votes[j] = 0;
-//    }
-//}
-//
-//
-////*********************************************************
-////              Destructor
-////*********************************************************
-//Question::~Question(){
-//    delete [] qusAns;
-//    delete [] votes;
-//}
-//
-//
-////*********************************************************
-////
-////*********************************************************
-//
-//void Question::setQA(string q, string a, string b, string c){
-//    
-//    
-//}
-//
-//
-////*********************************************************
-////
-////*********************************************************
-//void Question::getSurvey(){
-//    
-//    unsigned short count1, count2, count3, ansSum, ans, count;
-//    count1 = count2 = count3 = ansSum = ans = count = 0;
-//          
-//        do {
-//            cout<<endl
-//                << qusAns[0] << "\n"
-//                << "1: " << qusAns[1] << "\n"
-//                << "2: " << qusAns[2] << "\n"
-//                << "3: " << qusAns[3] << "\n"
-//                <<"Enter a number:  ";
-//            cin >> ans;
-//            
-//            if(!( ans >= 1 && ans <= 3 )) { cout<<"Invalid input. Try again...\n"; }
-//            
-//        } while (!( ans >= 1 && ans <= 3 ));
-//
-//
-//        switch(ans){
-//            case 1: 
-//            { 
-//                votes[0] +=1; //count1++; 
-//                votes[3] +=1; //ansSum++;
-//                break; 
-//            }
-//            case 2: 
-//            { 
-//                votes[1]+=1; //count2++; 
-//                votes[3]+=1; //ansSum++;
-//                break; 
-//            }
-//            case 3: 
-//            { 
-//                votes[2]+=1; //count3++; 
-//                votes[3]+=1; //ansSum++; 
-//                break; 
-//            }
-//            default:  { cout << "Invalid answer.\n"; }
-//        }
-//        
-// 
-//       // Reassign array with the voting results for this question
-//////        for(int i=0; i < size; i++){    
-//
-//////            if(i==0){ votes[i] = count1; }//5;}//for testing purposes
-//
-//////            else if(i==1){ votes[i] = count2; }//3;}// 
-//
-//////            else if(i==2){ votes[i] = count3; }//1;} //
-//
-//////            else { votes[3] = ansSum; }//9;} //
-//////        }   
-//}
-//
-//
-////*********************************************************
-////
-////*********************************************************
-////void prntChart(Question &q){
-//void Question::prntChart(){    
-//  
-//    static int count = 1;
-//    
-//    cout << "\n\tQuestion " << count  << " results\n";
-//    cout << qusAns[0] << endl << endl;
-//    
-//    for(int i = 0; i < 4; i++){
-//        
-//        if(i==3){ cout<<setw(17)<<"Total "<<setw(4)<<votes[i]<<" votes  "; }
-//        
-//        else { cout<<setw(16)<<qusAns[i+1]<<"  "<<setw(3)<<votes[i]<<" votes  "; } 
-//        
-//        for(int j = 0; j < votes[i]; j++){
-//            cout<<"*";  
-//        }      
-//        cout<<endl;
-//    }
-//    
-//    count++;
-//}
-//
-//
-////*********************************************************
-////
-////*********************************************************
+//*********************************************************
+
+//******************************************
+//      pause screen before continuing
+//******************************************
+void Survey::pause(char ch) {
+    
+    string msg = ch=='r' ? "roll" : "continue";    
+    cout<<endl<<setw(6)<<' '<<"Press enter to " << msg << ".";   
+    cin.get();
+}

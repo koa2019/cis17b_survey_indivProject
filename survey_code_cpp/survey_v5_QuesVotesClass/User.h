@@ -8,6 +8,7 @@
 #define USER_H
 #include <string> 
 #include<iostream>
+#include "Votes.h"
 using namespace std;  //STD Name-space where Library is compiled
 
 class User {
@@ -25,6 +26,8 @@ protected:
     
 public:
     
+    Votes votes; // Array holds how many votes each option received
+                // for this question & total sum of all votes for this question
     User();   // Default constructor
     User(int); // Constructor 2
     User(string); // Constructor #3
@@ -44,6 +47,12 @@ public:
     void setEmail(string str){ email = str; emaiSiz = email.size(); }
     void setPwrd(string str){  password = str; pwrdSiz = password.size();}
     void setHiScore(int s) { hiScore = s; }
+    
+    // Call Votes class functions
+    //void setVote(int i, int ans) { votes.setVoteIndx(i,ans); }
+    //void callIncreVotes() { votes.increVotes();}
+    //void callPrntVotes()const { votes.prntVotes(); }
+    void wrtVotes();
     
     // Create new User 
     void signUp();  // Calls functions to create 1 or more profiles
@@ -82,6 +91,8 @@ public:
     string getName() const {return name;}
     string getEmail() const {return email;}
     string getPwrd() const { return password; }
+    
+    
     void printUsr() const;  // User friendly print out
     void printUsrRec() const;  // prints each string's size    
 };

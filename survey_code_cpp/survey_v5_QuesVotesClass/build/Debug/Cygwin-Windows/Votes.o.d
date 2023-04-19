@@ -1,1 +1,2 @@
-build/Debug/Cygwin-Windows/Votes.o: Votes.cpp
+build/Debug/Cygwin-Windows/Votes.o: Votes.cpp Votes.h
+Votes.h:
