@@ -25,9 +25,18 @@ Admin::Admin(){
             usrArr[i] = new Admin(i); // Calls constructor #2 
         }        
        
-        readBin_setArray();  // Reset user array with record read in from binary file
+        readBin_setArray();  // Reset user array with record values read in from binary file
         
-
+        //printQueSums();
+//        for(i=0; i < NUMQQ;i++){
+//            cout<<"\n\tAdmin Default Constructor\n";
+//            cout<<"\tQueSums[" << i << "] = [ ";
+//            
+//            for(int j=0; j< NUMQQ; j++){
+//                cout << QueSums[i].getVote(j) << " ";
+//            }
+//            cout << "]\n";
+//        }
 }
 
 //******************************************************************************
@@ -81,7 +90,7 @@ void Admin::copy2Usr(User &user2, const int indx){
     user2.setName(usrArr[indx]->user.getName());       
     user2.setEmail(usrArr[indx]->user.getEmail());
     user2.setPwrd(usrArr[indx]->user.getPwrd());
-    user2.setHiScore(usrArr[indx]->user.getHiScore());        
+    user2.setVoteSiz(usrArr[indx]->user.getVoteSiz());        
     //cout<<"\n admin record: " << usrArr[indx]->user.getNumRec() <<endl;
     //usrArr[indx]->printAdUsr();
 }
@@ -275,7 +284,7 @@ void Admin::adminPortal(){
 //******************************************************************
 void Admin::readBin_setArray(){
     
-    cout<<"\n\tHit readBin_setArray()\n";
+    //cout<<"\n\tHit readBin_setArray()\n";
     
     ifstream inBin;
     string file = "usrData.dat";
@@ -285,10 +294,10 @@ void Admin::readBin_setArray(){
     long cursor = 0L,
          thisSum = 0L;
     int  i = 0;
-      int num = 0;
+    int num = 0;
     
     // Accumulate the size of each record and the beginning bit location for each record
-    while(i < totalRec){    
+    while(i < 1){   //while(i < totalRec){ 
            
         thisSum = 0L;
         //cout<<"\n\n i=" << i <<" cursor=" << cursor << " thisSum=" << thisSum <<endl;
@@ -354,10 +363,10 @@ void Admin::readBin_setArray(){
         
         
         
-        // Read & set hiScore in class object
-        // Accumulate number of bits for hiScore
+        // Read & set voteSiz in class object
+        // Accumulate number of bits for voteSiz
         inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-        usrArr[i]->user.setHiScore(num); 
+        usrArr[i]->user.setVoteSiz(num); 
         thisSum += sizeof(num);  
         //cout<<"thisSum=="<<thisSum<<endl;
         
@@ -389,6 +398,7 @@ void Admin::readBin_setArray(){
         long bFile = (i==0)? 0L : (cursor-thisSum); 
         usrArr[i]->setBegnFile(bFile);
         usrArr[i]->setRecSiz(thisSum);
+        usrArr[i]->setQueSums();
         //cout<<"\ni = "<<i<<" recSiz = "<<usrArr[i]->recSiz<<"  begnFile = "<<usrArr[i]->begnFile<<endl;   
 
         //usrArr[i]->printAdUsr();
@@ -400,9 +410,60 @@ void Admin::readBin_setArray(){
     inBin.close();              
 }
 
+void Admin::setQueSums(){
+    
+    cout << "\n\tHit setQueSums(). Record " << this->user.getNumRec() << ".\n";
+    
+    cout<<"\t     votes = [ ";
+    for(int j=0; j< NUMQQ; j++){
+        cout << this->user.votes.getVote(j) << ' ';
+    } cout << "]\n";
+    
+    
+    
+    for(int i=0; i < NUMQQ;i++){ // Loop through each question in survey         
+        
+        int ans = this->user.votes.getVote(i);
+        cout << "\nq"<<i<<"_ans"<<i<<" = " << ans;
+        
+        cout<<"\nQueSums[" << i << "] = [ ";          
+            
+        if( ans == 1) { 
+            cout<<"Hit ans == 1 ]\n";
+            QueSums[i].increVote(0);
+        }
+        else if( ans == 2) { 
+            cout<<"Hit ans == 2 ]\n";
+            QueSums[i].increVote(1);
+        }
+        else if( ans == 3) {
+            cout<<"Hit ans == 3 ]\n";
+            QueSums[i].increVote(2);
+        } else {
+            cout<<"Hit ans == 0 ]\n";
+        }
+    }
+    
+    prntQueSums();
+}
+
+void Admin::prntQueSums(){
+    
+    cout << endl;
+    
+    for(int i=0; i < NUMQQ;i++){
+        
+        cout<<"\tQueSums[" << i << "] = [ ";
+
+        for(int j=0; j< NUMQQ; j++){
+            cout << QueSums[i].getVote(j) << " ";
+        }
+        cout << "]\n";
+    }
+}
 
 /******************************************************************/ 
-//                     Reset hiScore in User object
+//                     Reset voteSiz in User object
 //                   and rewrite binary & text files
 /******************************************************************/ 
 
@@ -414,12 +475,18 @@ void Admin::editVotes(){
     cout<<"\nWhich record do you want to edit?\n";
     getIndex(indx);           
     
+    usrArr[indx]->user.votes.setVoteIndx(0,1);
+    usrArr[indx]->user.votes.increNumVote();
+    usrArr[indx]->user.votes.setVoteIndx(1,0);
+    usrArr[indx]->user.votes.increNumVote(); 
+    usrArr[indx]->user.votes.setVoteIndx(2,0);
+    usrArr[indx]->user.votes.increNumVote(); 
 
-    for(int i=0; i < NUMQQ; i++){
-        int num = (rand()%3)+1;
-        usrArr[indx]->user.votes.setVoteIndx(i,num);
-        usrArr[indx]->user.votes.increNumVote();                            
-    }
+    //for(int i=0; i < NUMQQ; i++){
+        //int num = (rand()%3)+1;
+        //usrArr[indx]->user.votes.setVoteIndx(i,num);
+        //usrArr[indx]->user.votes.increNumVote();                            
+    //}
     
     long recLoc = usrArr[indx]->begnFile;
     usrArr[indx]->user.reWrtBin(recLoc);
@@ -458,7 +525,7 @@ void Admin::deleteUsr(){
         temp += "x";
     }
     usrArr[indx]->user.setPwrd(temp);       // Reset password 
-    usrArr[indx]->user.setHiScore(0);       // Reset hiScore
+    usrArr[indx]->user.setVoteSiz(0);       // Reset voteSiz
     usrArr[indx]->user.reWrtBin(usrArr[indx]->begnFile); // rewrites this record in binary & text files  
     usrArr[indx]->readBin_setArray();          // Reset usrArr[] after the binary file is updated  
     cout<<"\n\nRecord successfully deleted.";

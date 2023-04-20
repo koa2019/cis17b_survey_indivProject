@@ -20,7 +20,8 @@ private:
     long begnFile; // Beginning bit location of this file in binary
     User user;   // Admin aggregates instance of User
     Admin **usrArr = nullptr;
-    Votes survySums;
+    Votes QueSums[NUMQQ];
+    
     
 public:
     
@@ -34,11 +35,12 @@ public:
     // Mutator
     void setRecSiz(int n){ recSiz = n;}
     void setBegnFile(int n){ begnFile = n;}
+    void setQueSums(); // Accumulate the voting results for each question in survey
     void deleteUsr(); // deletes User in binary file
-    int isUsrLogin();        // Calls functions to verify login credentials
-    void editVotes(); // Reassign hiScore in User and rewrite in binary & text files
+    void editVotes(); // Reassign votes[] in User and rewrite in binary & text files
     
     // Reads & writes Admin binary & text files
+    int isUsrLogin();        // Calls functions to verify login credentials
     void adminLogin();  // checks admin login 
     void adminPortal(); // if Admin is logged in, then display menu   
     void readBin_setArray(); // reads User's binary file
@@ -58,6 +60,7 @@ public:
     void printAdUsr() const; // prints all member variable's in an Admin + User's record
     void printAdUsr(int) const; // passes indx to print
     void printAllUsr() const;  // prints usrArr[]  
+    void prntQueSums();
     void pause(char ch='c');
 };
 #endif /* ADMIN_H */

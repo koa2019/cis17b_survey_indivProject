@@ -63,6 +63,10 @@
  * Case 4 in adminPortal() calls editVotes();
  * Inside of editVotes() and delete() I added usrArr[ind]-> to readBin_setArray().
  * 
+ * Aggregated Votes QueSums[3] in Admin's variables to represent the total 
+ * number of votes each question received.
+ * Changed hiScore to voteSiz
+ * 
  * 
  To Do: 
  * add all votes for each question to Votes survySums and print histogram;
