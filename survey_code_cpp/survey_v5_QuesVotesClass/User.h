@@ -31,7 +31,7 @@ public:
     User();   // Default constructor
     User(int); // Constructor 2
     User(string); // Constructor #3
-    User(string,string,string); // Constructor #4
+    User(string,string,string,int,int,int); // Constructor #4
     User(int,string,string,string);
     ~User(){cout<<"\nHit User Destructor()."; }
     

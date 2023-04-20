@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "Admin.h"
-
+#include "Question.h" 
 using namespace std;  //STD Name-space where Library is compiled
 
 
@@ -26,8 +26,8 @@ Admin::Admin(){
         }        
        
         readBin_setArray();  // Reset user array with record values read in from binary file
-        
-        //printQueSums();
+        //setQueSums();
+        //prntQueSums();
 //        for(i=0; i < NUMQQ;i++){
 //            cout<<"\n\tAdmin Default Constructor\n";
 //            cout<<"\tQueSums[" << i << "] = [ ";
@@ -71,8 +71,7 @@ Admin::Admin(string n, string e, string p) {
 //******************************************************************************
 //                 Destructor
 //******************************************************************************
-Admin::~Admin() {
-    
+Admin::~Admin() {    
     //cout<<"\nHit Admin Destructor().";
     delete [] usrArr; 
 }
@@ -112,18 +111,18 @@ int Admin::isUsrLogin(){
     string tempE = usrArr[num]->user.getEmail(), tempPw =usrArr[num]->user.getPwrd(); // use for testing when you don't want to type it in each time
     
     cout<<"\nEmail is case sensitive. Must use lowercase letters.\n";
-    //do {
+    do {
         cout<<"Enter email:    ";
-        //cin >> tempE;
-    //} while(!(user.isMinSize(tempE,8)) || !(user.confrmEmail(tempE)));
-    cout<<tempE<<endl;
+        cin >> tempE;
+    } while(!(user.isMinSize(tempE,8)) || !(user.confrmEmail(tempE)));
+    //cout<<tempE<<endl;
                 
-    //do{
+    do{
         cout<<"Enter password: ";
-        //cin >> tempPw;       
-    //} while(!(user.isMinSize(tempPw,7)));
-    //cin.ignore();
-    cout<<tempPw;
+        cin >> tempPw;       
+    } while(!(user.isMinSize(tempPw,7)));
+    cin.ignore();
+    //cout<<tempPw;
        
     // look for this email in usrBin.dat. If it exists, then
     // compare email and password with record in binary file
@@ -297,7 +296,7 @@ void Admin::readBin_setArray(){
     int num = 0;
     
     // Accumulate the size of each record and the beginning bit location for each record
-    while(i < 1){   //while(i < totalRec){ 
+    while(i < totalRec){ 
            
         thisSum = 0L;
         //cout<<"\n\n i=" << i <<" cursor=" << cursor << " thisSum=" << thisSum <<endl;
@@ -398,7 +397,7 @@ void Admin::readBin_setArray(){
         long bFile = (i==0)? 0L : (cursor-thisSum); 
         usrArr[i]->setBegnFile(bFile);
         usrArr[i]->setRecSiz(thisSum);
-        usrArr[i]->setQueSums();
+       
         //cout<<"\ni = "<<i<<" recSiz = "<<usrArr[i]->recSiz<<"  begnFile = "<<usrArr[i]->begnFile<<endl;   
 
         //usrArr[i]->printAdUsr();
@@ -407,60 +406,105 @@ void Admin::readBin_setArray(){
     
     i = (i > totalRec) ? i : totalRec;
     
+    setQueSums();
+    
     inBin.close();              
 }
 
 void Admin::setQueSums(){
     
-    cout << "\n\tHit setQueSums(). Record " << this->user.getNumRec() << ".\n";
+    //cout << "\n\tHit setQueSums().\n";
     
-    cout<<"\t     votes = [ ";
+    // Reset arrays to zero
     for(int j=0; j< NUMQQ; j++){
-        cout << this->user.votes.getVote(j) << ' ';
-    } cout << "]\n";
+        Que1Sums[j] = 0;
+        Que2Sums[j] = 0;
+        Que3Sums[j] = 0;
+    }
+
+
     
-    
-    
-    for(int i=0; i < NUMQQ;i++){ // Loop through each question in survey         
-        
-        int ans = this->user.votes.getVote(i);
-        cout << "\nq"<<i<<"_ans"<<i<<" = " << ans;
-        
-        cout<<"\nQueSums[" << i << "] = [ ";          
-            
-        if( ans == 1) { 
-            cout<<"Hit ans == 1 ]\n";
-            QueSums[i].increVote(0);
-        }
-        else if( ans == 2) { 
-            cout<<"Hit ans == 2 ]\n";
-            QueSums[i].increVote(1);
-        }
-        else if( ans == 3) {
-            cout<<"Hit ans == 3 ]\n";
-            QueSums[i].increVote(2);
-        } else {
-            cout<<"Hit ans == 0 ]\n";
+    for(int i=0; i < totalRec; i++){ // Loop through usrArr[]        
+     
+ 
+        for(int j=0; j < NUMQQ; j++){            
+       
+            int ans = usrArr[i]->user.votes.getVote(j);//(i)
+            //cout << "\n Record " << usrArr[i]->user.getNumRec();    
+            //cout << " votes[" << j << "] = " << ans << endl;
+
+
+            if( ans == 1) { 
+                //cout << " Hit ans == 1\n";
+                //cout<<" BEFORE QueSums[" << i << "] = " << Que1Sums[i] << endl; 
+                Que1Sums[j]++;
+                //cout<<" AFTER QueSums[" << i << "]  = " << Que1Sums[i] << endl; 
+            }
+            else if( ans == 2) { 
+                //cout<<" BEFORE QueSums[" << i << "] = " << Que2Sums[i] << endl; 
+                Que2Sums[j]++;
+                //cout<<" AFTER QueSums[" << i << "]  = " << Que2Sums[i] << endl; 
+            }
+            else if( ans == 3) {
+                //cout<<" BEFORE QueSums[" << i << "] = " << Que3Sums[i] << endl; 
+                Que3Sums[j]++;
+                //cout<<" AFTER QueSums[" << i << "]  = " << Que3Sums[i] << endl; 
+            } else {
+                //cout<<"Hit ans == 0 ]\n";
+            }
         }
     }
-    
-    prntQueSums();
+ 
+    //prntQueSums();
 }
 
 void Admin::prntQueSums(){
     
-    cout << endl;
+    //cout<<"\n\tHit prntQueSums()";
+    //Question qq;
     
-    for(int i=0; i < NUMQQ;i++){
-        
-        cout<<"\tQueSums[" << i << "] = [ ";
-
-        for(int j=0; j< NUMQQ; j++){
-            cout << QueSums[i].getVote(j) << " ";
-        }
-        cout << "]\n";
-    }
+    cout << endl << endl;       
+    cout << setw(12)<< "Which series do you like the most? \n";
+    cout << "Star Wars    " << Que1Sums[0] << " votes ";
+    getChart(Que1Sums[0]);
+    cout << "Harry Potter " << Que1Sums[1] << " votes ";
+    getChart(Que1Sums[1]);
+    cout << "The Simpsons " << Que1Sums[2] << " votes ";
+    getChart(Que1Sums[2]);
+    cout << endl << endl;
+    
+    
+    cout << setw(12)<< "What is your favorite holiday??\n";
+    cout << "Thanksgiving    " << Que2Sums[0] << " votes ";
+    getChart(Que2Sums[0]);
+    cout << "Christmas       " << Que2Sums[1] << " votes ";
+    getChart(Que2Sums[1]);
+    cout << "Valentine's Day " << Que2Sums[2] << " votes ";
+    getChart(Que2Sums[2]);
+    cout << endl << endl;
+    
+    
+    cout << setw(12)<< "Which dessert is better???\n";
+    cout << "Apple Pie al Mode " << Que3Sums[0] << " votes ";
+    getChart(Que3Sums[0]);
+    cout << "Red Velvet Cake   " << Que3Sums[1] << " votes ";
+    getChart(Que3Sums[1]);
+    cout << "Cheesecake        " << Que3Sums[2] << " votes ";
+    getChart(Que3Sums[2]);       
+    cout << endl << endl;
 }
+
+
+/******************************************************************/ 
+//
+/******************************************************************/ 
+void Admin::getChart(int qSum) const{   
+    for(int i = 0; i < qSum; i++){        
+        cout<<"*";  
+    }
+    cout<<endl;
+}
+
 
 /******************************************************************/ 
 //                     Reset voteSiz in User object
@@ -469,19 +513,27 @@ void Admin::prntQueSums(){
 
 void Admin::editVotes(){ 
     
-    int score = 0;    
+    int num1 = 0, 
+        num2 = 1,
+        num3 = 0;    
     int indx = 0;  
     
     cout<<"\nWhich record do you want to edit?\n";
-    getIndex(indx);           
+    getIndex(indx);          
     
-    usrArr[indx]->user.votes.setVoteIndx(0,1);
-    usrArr[indx]->user.votes.increNumVote();
-    usrArr[indx]->user.votes.setVoteIndx(1,0);
-    usrArr[indx]->user.votes.increNumVote(); 
-    usrArr[indx]->user.votes.setVoteIndx(2,0);
-    usrArr[indx]->user.votes.increNumVote(); 
-
+    
+    //cout<<"Enter the answer for question 1. Number 1-"<<NUMQQ<<endl;
+    //cin >> num1;   
+    //cout<<"Enter the answer for question 2. Number 1-"<<NUMQQ<<endl;
+    //cin >> num2; 
+    //cout<<"Enter the answer for question 3. Number 1-"<<NUMQQ<<endl;
+    //cin >> num3;
+  
+    //usrArr[indx]->user.votes.setVotArr(1,0,0);
+    usrArr[indx]->user.votes.setVotArr(0,1,0);
+    //usrArr[indx]->user.votes.setVotArr(0,0,1);
+    
+    
     //for(int i=0; i < NUMQQ; i++){
         //int num = (rand()%3)+1;
         //usrArr[indx]->user.votes.setVoteIndx(i,num);
@@ -490,7 +542,8 @@ void Admin::editVotes(){
     
     long recLoc = usrArr[indx]->begnFile;
     usrArr[indx]->user.reWrtBin(recLoc);
-    usrArr[indx]->readBin_setArray(); // Reset usrArr after the binary file is updated     
+    usrArr[indx]->readBin_setArray(); // Reset usrArr after the binary file is updated   
+    setQueSums();
     //cout<<"\n\nRecord successfully updated.";
     //usrArr[indx]->printAdUsr();          // confirm this record was reset    
 }

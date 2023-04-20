@@ -3,6 +3,7 @@
 #include <string>
 #include "User.h"
 #include "Survey.h"
+
 using namespace std;  //STD Name-space where Library is compiled
 
 /*****************************************************************/
@@ -19,7 +20,7 @@ User::User(){
     email="";
     pwrdSiz=0;
     password="";  
-    voteSiz=NUMQQ;        
+    voteSiz=NUMQQ;    
 }
 
 /*****************************************************************/
@@ -36,7 +37,7 @@ User::User(int rec){
     email="";
     pwrdSiz=0;
     password="";  
-    voteSiz=NUMQQ;
+    voteSiz=NUMQQ;    
 }
 
 
@@ -65,13 +66,14 @@ User::User(string n){
 //                  Called in readInputFile()
 /*****************************************************************/
 
-User::User(string n, string e, string p){
+User::User(string n, string e, string p, int a, int b, int c){
     //cout<<"\nHit User constructor #4\n";
     readNumRec(); 
     setName(n);
     setEmail(e);
     setPwrd(p);
-    voteSiz=NUMQQ;
+    voteSiz=NUMQQ; 
+    votes.setVotArr(a,b,c);
     wrtTxt();
     wrtBin();
     addNumRec(); // increment total # of profiles created       
@@ -684,11 +686,10 @@ void User::readInputFile(){
     } 
     out.close();
     oB.close();
-    
-    
-    User usera("homer simpson","homer@simp.com","Homer!23");
-    User userb("marge simpson","marge@simp.com","Marge$ab");
-    User userc("lisa simpson","lisa@simp.com","Lisa!2345");   
+
+    User usera("homer simpson","homer@simp.com","Homer!23",1,1,1);
+    User userb("marge simpson","marge@simp.com","Marge$ab",2,2,2);
+    User userc("lisa simpson","lisa@simp.com","Lisa!2345" ,3,3,2);   
     //User userd("day tripper","lucy@beatles.com","DayT#2345"); 
     //User usere("harry potter","harry@potter.com","Harry!23");
    
