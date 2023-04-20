@@ -7,7 +7,7 @@ email:   homer@simp.com
 pwrdSiz: 8
 pwrd:    Homer!23
 votSiz:  003
-votes[1,0,0]
+votes[1,1,1]
 
 Record   1
 namSiz:  13
@@ -17,7 +17,7 @@ email:   marge@simp.com
 pwrdSiz: 8
 pwrd:    Marge$ab
 votSiz:  003
-votes[1,0,0]
+votes[2,2,2]
 
 Record   2
 namSiz:  12
@@ -27,4 +27,4 @@ email:   lisa@simp.com
 pwrdSiz: 9
 pwrd:    Lisa!2345
 votSiz:  003
-votes[1,0,0]
+votes[3,3,2]

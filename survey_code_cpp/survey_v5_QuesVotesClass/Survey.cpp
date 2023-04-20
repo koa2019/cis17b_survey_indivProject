@@ -89,14 +89,14 @@ bool Survey::start(User &user, const long recordLoc){
 
      if(!isTrue){ // if player 1 is NOT winner
         
-        cout<<"\n\nVoteSiz was NOT updated!\n"; 
+        cout<<"\n\nSurvey was not completed!\n"; 
         return false; 
     }
     else { 
         
         //rewrite this record in binary & text files  
-        user.reWrtBin(recordLoc); 
-        cout << "\nUser is updating binary file....";
+        //user.reWrtBin(recordLoc); 
+        //cout << "\nUser is updating binary file....";
         return isTrue; // return true and Admin will confirm files were rewritten
     }
 }

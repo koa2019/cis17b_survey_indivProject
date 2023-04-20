@@ -29,16 +29,16 @@ class Votes {
     }
     
     // Accessors
-    void setVotArray(int a, int b, int c){
+    void setVotArr(int a, int b, int c){
+        //cout<<"\n\tHit setVotArr()\n";
         votes[0] = a;
         votes[1] = b;
-        votes[3] = c;
+        votes[2] = c;
     }
     void setVoteIndx(int i, int value){ votes[i] = value; } 
     int getVote(int i) const { return votes[i]; }
     int getNumVote() const { return numVote; }
     void increNumVote(){ numVote++; }
-    void increVote(int i){ votes[i]++; }
     
     
     // Mutator

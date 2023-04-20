@@ -20,8 +20,10 @@ private:
     long begnFile; // Beginning bit location of this file in binary
     User user;   // Admin aggregates instance of User
     Admin **usrArr = nullptr;
-    Votes QueSums[NUMQQ];
-    
+    //Votes QueSums[NUMQQ];
+    int Que1Sums[NUMQQ] = {0,0,0};
+    int Que2Sums[NUMQQ] = {0,0,0};
+    int Que3Sums[NUMQQ] = {0,0,0};
     
 public:
     
@@ -61,6 +63,7 @@ public:
     void printAdUsr(int) const; // passes indx to print
     void printAllUsr() const;  // prints usrArr[]  
     void prntQueSums();
+    void getChart(int) const;
     void pause(char ch='c');
 };
 #endif /* ADMIN_H */

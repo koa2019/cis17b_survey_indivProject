@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
     int choice = 0;
     Admin admin;
     User user; 
-    
+    admin.prntQueSums();
     
     cout<<"\n\n\tMenu\n"
         <<"1: Admin Login\n"
@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
         <<"9: Exit\n"
         <<"Enter a number: ";
         cin>>choice;
-        cin.ignore();
+        //cin.ignore();
         
         switch(choice){
             
@@ -166,12 +166,12 @@ int main(int argc, char** argv) {
                         admin.printAdUsr(user.getNumRec());   
                           
                         //rewrite this record in binary & text files  
-                        //user.reWrtBin(recordLoc); 
-                        //cout << "\nUser is updating binary file...."; 
-        
+                        user.reWrtBin(recordLoc); 
+                        cout << "\nUser is updating binary file....";         
                         admin.readBin_setArray();
                         cout << "\nAdmin is reading updated binary file....\n";
                         admin.printAdUsr(user.getNumRec());
+                        admin.prntQueSums();
                     }                                                    
                 }
                 break;
