@@ -19,7 +19,7 @@ User::User(){
     email="";
     pwrdSiz=0;
     password="";  
-    hiScore=0;        
+    voteSiz=NUMQQ;        
 }
 
 /*****************************************************************/
@@ -36,7 +36,7 @@ User::User(int rec){
     email="";
     pwrdSiz=0;
     password="";  
-    hiScore=NUMQQ;
+    voteSiz=NUMQQ;
 }
 
 
@@ -55,7 +55,7 @@ User::User(string n){
     email="";
     pwrdSiz=0;
     password=""; 
-    hiScore=NUMQQ;
+    voteSiz=NUMQQ;
     //printUsr();
 }
 
@@ -71,7 +71,7 @@ User::User(string n, string e, string p){
     setName(n);
     setEmail(e);
     setPwrd(p);
-    hiScore=NUMQQ;
+    voteSiz=NUMQQ;
     wrtTxt();
     wrtBin();
     addNumRec(); // increment total # of profiles created       
@@ -89,9 +89,9 @@ void User::wrtVotes(){
     
    
     outTxt << "votes[" ;
-    for(int i=0; i < hiScore; i++){    
+    for(int i=0; i < voteSiz; i++){    
         outTxt << votes.getVote(i);
-        if( !(i == (hiScore-1))){ outTxt << ','; }
+        if( !(i == (voteSiz-1))){ outTxt << ','; }
     }    
     outTxt << "]\n"; // Add 10 to charCount in reWrtTxt() for this array
             
@@ -120,7 +120,7 @@ void User::wrtTxt(){
     outTxt<<"pwrdSiz: "<<pwrdSiz<<endl; // write the size of this string to text file
     outTxt<<"pwrd:    "<<password<<endl;// write this string to text file 
     outTxt<<"votSiz:  "; 
-    outTxt<< (hiScore/100) << (hiScore/10%10) << (hiScore%10) <<endl; 
+    outTxt<< (voteSiz/100) << (voteSiz/10%10) << (voteSiz%10) <<endl; 
     outTxt << "votes[";
     for(int i=0; i < NUMQQ; i++){    
         outTxt << votes.getVote(i);
@@ -150,7 +150,7 @@ void User::reWrtTxt(long begnFile){
     int charCount = (getNumRec()==0) ? 0 : ((numChar)*getNumRec());    
     //cout<<"\ncharCount = "<< charCount <<endl;
     
-    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits  
+    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // voteSiz is a int which is 4 bits  
     //cout<<"begnFile = "<< cursor <<endl;
     
     
@@ -165,7 +165,7 @@ void User::reWrtTxt(long begnFile){
     outTxt<<"pwrdSiz: "<<getPwrdSiz()<<endl; // write the size of this string to text file
     outTxt<<"pwrd:    "<<getPwrd()<<endl;// write this string to text file 
     outTxt<<"votSiz:  "; 
-    outTxt<< (getHiScore()/100) << (getHiScore()/10%10) << (getHiScore()%10) <<endl;
+    outTxt<< (getVoteSiz()/100) << (getVoteSiz()/10%10) << (getVoteSiz()%10) <<endl;
     outTxt << "votes[";
     for(int i=0; i < NUMQQ; i++){    
         outTxt << votes.getVote(i);
@@ -208,8 +208,8 @@ void User::wrtBin(){
     outBin.write(reinterpret_cast<char *>(&pwrdSiz), sizeof(unsigned short)); 
     outBin.write(password.c_str(), pwrdSiz*sizeof(char));       
      
-    // Write hiScore to binary file
-    outBin.write(reinterpret_cast<char *>(&hiScore) , sizeof(int)); 
+    // Write voteSiz to binary file
+    outBin.write(reinterpret_cast<char *>(&voteSiz) , sizeof(int)); 
     
     // Write each element in Votes array
     for(int i=0; i < NUMQQ; i++){
@@ -264,8 +264,8 @@ void User::reWrtBin(long begnFile){
     outBin.write(password.c_str(), pwrdSiz*sizeof(char)); 
    
     
-    // Rewrite hiScore in binary file     
-    outBin.write(reinterpret_cast<char *>(&hiScore) , sizeof(int)); 
+    // Rewrite voteSiz in binary file     
+    outBin.write(reinterpret_cast<char *>(&voteSiz) , sizeof(int)); 
     
     
     // Write each element in Votes array
@@ -295,15 +295,15 @@ void User::reWrtBin(long begnFile){
 
 
 //******************************************************************************
-//            Checks if current score is greater than hiScore 
+//            Checks if current score is greater than voteSiz 
 //******************************************************************************
 
-bool User::isHiScore(int score){
+bool User::isVoteSiz(int score){
     
     if((score > 999 || score < 0)){ return false; }
-    // hiScore is formatted for max of 3 digits 
+    // voteSiz is formatted for max of 3 digits 
     
-    else if(score > hiScore ) { return true; }
+    else if(score > voteSiz ) { return true; }
     
     else { return false;}
 }
@@ -607,7 +607,7 @@ void User::printUsr()const{
     for(i=0; i < pwrdSiz;i++){
         cout<<"*";
     }
-    cout<<"\nVoteSiz: " << hiScore <<endl;
+    cout<<"\nVoteSiz: " << voteSiz <<endl;
     cout<<"votes[";
     for(int i=0; i < NUMQQ; i++){    
         cout << votes.getVote(i);
@@ -629,7 +629,7 @@ void User::printUsrRec() const{
         <<"Email:      "<< email   <<endl
         <<"PwrdSiz:    "<< pwrdSiz <<endl
         <<"Password:   "<< password<<endl
-        <<"VoteSiz:    "<< hiScore<<endl;
+        <<"VoteSiz:    "<< voteSiz<<endl;
    
     cout<<"votes[";
     for(int i=0; i < NUMQQ; i++){    

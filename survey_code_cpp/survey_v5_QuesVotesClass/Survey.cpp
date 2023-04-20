@@ -89,7 +89,7 @@ bool Survey::start(User &user, const long recordLoc){
 
      if(!isTrue){ // if player 1 is NOT winner
         
-        cout<<"\n\nHiScore was NOT updated!\n"; 
+        cout<<"\n\nVoteSiz was NOT updated!\n"; 
         return false; 
     }
     else { 
