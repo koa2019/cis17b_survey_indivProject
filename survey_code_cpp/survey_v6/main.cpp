@@ -62,19 +62,22 @@
  * I realized i wasn't setPwrd() inside of readBin_setArray(). idk how it still worked? lol
  * Case 4 in adminPortal() calls editVotes();
  * Inside of editVotes() and delete() I added usrArr[ind]-> to readBin_setArray().
- * 
  * Aggregated Votes QueSums[3] in Admin's variables to represent the total 
  * number of votes each question received.
  * Changed hiScore to voteSiz
- * 
  * Created 3 int array to hold the survey results in Admin.
-   Added setQueSums(), prntQueSums(), getChart()
+   Added setQueSums(), printQueSums(), getChart()
   
- * To Do: 
- * add all votes for each question to Votes survySums and print histogram;
- * Make readInput() read inputs from file again 
- * Add a bool variable to Admin as a flag for deleted records?
  
+ v6:
+ * Change Que1Sum, Que2Sum, Que3Sum to Votes QueSums[3].
+ * Aggregated Question array inside of Survey, so I can print
+ * questions & answers in Admin printQueSums().
+ * 
+ * To Do: 
+ * Print percentages in printQueSums(). 
+ * Make readInput() read inputs from file again 
+ * Add a bool isDeleted[totalRec] to Admin as a flag for deleted records? 
  * DRY. Clean up repetitive code.
  */
 
@@ -106,20 +109,18 @@ int main(int argc, char** argv) {
     srand(static_cast<unsigned int>(time(0)));
 
     int choice = 0;
-    Admin admin;
     User user; 
-    admin.prntQueSums();
+    Admin admin;   
     
     cout<<"\n\n\tMenu\n"
         <<"1: Admin Login\n"
         <<"2: Sign Up\n"
         <<"3: User Login\n"
-        <<"4: Take Survey as a guest\n"
+        <<"4: View Survey Chart\n"
         <<"5: Reset binary & text files\n"
         <<"9: Exit\n"
         <<"Enter a number: ";
         cin>>choice;
-        //cin.ignore();
         
         switch(choice){
             
@@ -173,19 +174,16 @@ int main(int argc, char** argv) {
                         admin.readBin_setArray();
                         cout << "\nAdmin is reading updated binary file....\n";
                         admin.printAdUsr(user.getNumRec());
-                        admin.prntQueSums();
+                        cout << "Survey Results\n";
+                        admin.printQueSums();
                     }                                                    
                 }
                 break;
             }             
-            case 4: // Play NewClass as a guest
+            case 4: // View the Survey's chart
             {          
-                User guest("Guest"); 
-                //cout<<"\ninside main() guest user object looks like: ";
-                guest.printUsr();
-                Survey survey2; // Calls default constructor
-                //survey2.prntQA();
-                survey2.start(guest,0); 
+                //cout<<"\tIn main()"; 
+                admin.printQueSums();
                 break;
             }
             case 5:   // Reset files by erasing binary & text file, then creates records in 
