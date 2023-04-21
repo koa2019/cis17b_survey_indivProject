@@ -195,7 +195,7 @@ void prntChart(Question &q){
         if(i==3){ cout <<setw(13)<< "Total " << setw(4) << q.qAns[i] << " votes  "; }
         
         else {
-            cout <<setw(12)<< q.qStr[i+1] << "  " << setw(3) << q.qAns[i] << " votes  ";
+            cout << setw(12) << q.qStr[i+1] << "  " << setw(3) << q.qAns[i] << " votes  ";
         } 
         
         for(int j = 0; j < q.qAns[i]; j++){

@@ -1,0 +1,50 @@
+
+Record   0
+namSiz:  13
+name:    homer simpson
+emaiSiz: 14
+email:   homer@simp.com
+pwrdSiz: 8
+pwrd:    Homer!23
+votSiz:  003
+votes[1,1,1]
+
+Record   1
+namSiz:  13
+name:    marge simpson
+emaiSiz: 14
+email:   marge@simp.com
+pwrdSiz: 8
+pwrd:    Marge$ab
+votSiz:  003
+votes[2,2,2]
+
+Record   2
+namSiz:  12
+name:    lisa simpson
+emaiSiz: 13
+email:   lisa@simp.com
+pwrdSiz: 9
+pwrd:    Lisa!2345
+votSiz:  003
+votes[3,3,2]
+
+Record   3
+namSiz:  8
+name:    danielle
+emaiSiz: 14
+email:   danielle@d.com
+pwrdSiz: 11
+pwrd:    Danielle!23
+votSiz:  003
+votes[1,2,3]
+
+Record   4
+namSiz:  5
+name:    guest
+emaiSiz: 11
+email:   guest@g.com
+pwrdSiz: 8
+pwrd:    Guest!23
+votSiz:  003
+votes[3,2,1]
