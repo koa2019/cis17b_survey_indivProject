@@ -25,7 +25,7 @@ User::User(){
 
 /*****************************************************************/
 //                  Constructor #2
-//               Admin calls it in getAllUsr()
+//               Admin calls it in readBin_setArr()
 /*****************************************************************/
 
 User::User(int rec){
@@ -66,8 +66,26 @@ User::User(string n){
 //                  Called in readInputFile()
 /*****************************************************************/
 
-User::User(string n, string e, string p, int a, int b, int c){
+User::User(string n, string e, string p){
     //cout<<"\nHit User constructor #4\n";
+    readNumRec(); 
+    setName(n);
+    setEmail(e);
+    setPwrd(p);
+    voteSiz=NUMQQ; 
+    votes.setVoteArr();
+    wrtTxt();
+    wrtBin();
+    addNumRec(); // increment total # of profiles created       
+    wrtNumRec(); 
+}
+/*****************************************************************/
+//                     Constructor #5
+//                  Called in readInputFile()
+/*****************************************************************/
+
+User::User(string n, string e, string p, int a, int b, int c){
+    //cout<<"\nHit User constructor #5\n";
     readNumRec(); 
     setName(n);
     setEmail(e);
@@ -79,6 +97,7 @@ User::User(string n, string e, string p, int a, int b, int c){
     addNumRec(); // increment total # of profiles created       
     wrtNumRec(); 
 }
+
 
 /******************************************************************/              
 //                  WRITE 1 RECORD TO TEXT FILE     
@@ -214,8 +233,7 @@ void User::wrtBin(){
     outBin.write(reinterpret_cast<char *>(&voteSiz) , sizeof(int)); 
     
     // Write each element in Votes array
-    for(int i=0; i < NUMQQ; i++){
-        
+    for(int i=0; i < NUMQQ; i++){        
         int num = votes.getVote(i);
         outBin.write(reinterpret_cast<char *>(&num) , sizeof(int));
     }
@@ -230,9 +248,9 @@ void User::wrtBin(){
 
 void User::reWrtBin(long begnFile){
       
-    cout<<"\n\n Hit reWrtBin()  begnFile = " << begnFile << endl;
+    //cout<<"\n\n Hit reWrtBin()  begnFile = " << begnFile << endl;
      
-    printUsrRec();
+    //printUsrRec();
     
     fstream outBin; 
     outBin.open("usrData.dat", ios::ate | ios::in | ios::out | ios::binary); // appends content to the current content of the file.
@@ -687,11 +705,18 @@ void User::readInputFile(){
     out.close();
     oB.close();
 
-    User usera("homer simpson","homer@simp.com","Homer!23",1,1,1);
-    User userb("marge simpson","marge@simp.com","Marge$ab",2,2,2);
-    User userc("lisa simpson","lisa@simp.com","Lisa!2345" ,3,3,2);   
-    //User userd("day tripper","lucy@beatles.com","DayT#2345"); 
-    //User usere("harry potter","harry@potter.com","Harry!23");
+    User user1("homer simpson","homer@simp.com","Homer!23",1,1,1);
+    User user2("marge simpson","marge@simp.com","Marge$ab",2,2,2);
+    User user3("lisa simpson","lisa@simp.com","Lisa!2345" ,3,3,2);
+    User user4("master yoda","yoda@jedi.com","Yoda!234");
+    User user5("anakin skywalker","anakin@jedi.com","Anakin!2");
+    User user6("lucy sky","lucy@sky.com","Lucy#2345"); 
+    User user7("harry potter","harry@potter.com","Harry!23");
+    User user8("jane smith","jane@smith.com","Jane!234");
+    User user9("mickey mouse","mickey@disney.com","Mickey!23");
+    User use10("minnie mouse","minnie@disney.com","Minnie!23");
+    User use11("taylor swift","taylor@swift.com","Taylor!23");
+    
    
     // Open & read input.txt
 //    readIn.open("input.txt", ios::in); // Delete contents in file    

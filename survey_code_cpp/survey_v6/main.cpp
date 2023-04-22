@@ -2,84 +2,19 @@
  * File:    main.cpp
  * Author:  Danielle F
  * Created: 04-13-23 @8PM
- * Purpose:  survey project v4
- * 
- * v1:
- * Admin inherits User
- * Added admin readBin_setArray(), wrtAdminTxt() & wrtAdminBin()
- * Fixed bug: Admin is crashing. Added a cout inside ~Admin().
- * Added 3 constructors for User. 
- * Added recSize & begnFile variables to Admin so it could  
- * hold their info when handling a binary record.
- * Admin can rewrite the value for hiScore in userData.dat when 
- * it uses findByEmail() to set records size & beginning file location.
- * Admin can rewrite one full binary record instead of just hiScoore.
- * Copied this folder to yahtzee_v15
- * Added getMenu() so I can focus on my survey.
- *  Rewrites 1 record in usrdata.txt after it rewrites binary.
- * 
- * 
- v2:
- * I copied my Admin & User classes from yahtzee_v21 to here.
- * Created string array with 1 question and 3 possible answers.
- * Created a loop to mimic 5 people answering this 1 question
- * Created counters for each question's possible answer and
-   reassigned int votes[] with the the counters some answered the question.
- * Passed the questions and answers arrays to a print function.
- * Created prntChart() that displays the voting results as well as a histogram 
-   with stars to represent each vote.
- * 
- * 
- v3: 
- * Moved qusAns[] and votes[] to a structure in main(). It won't work in Question.h
- * Created 1 instance of Question structure and made sure it still ran correctly.
- * Changed prntChart() to accept a structure instead of 2 difference types of arrays
- * 
- * 
- v4: 
- * Had to create Survey class and move Questions to it because i skipped a step.
- * In Questions class I made it 4 strings instead of an array of strings.
- * Questions reads its questions and possible answers from a text file.
- * In Questions getSurve() I created an array of questions, prompted User,
-   and saved their answers to an instance of Votes.
- * Added Votes structure and aggregated an instance of it in Questions class.
- * In main() menu case 4 allows you to take a survey as a guest and doesn't save
- * its results to any files.
- * 
- * 
- v5:
- * Update this version with store_v1.4's User and Admin Classes.
- * Moving start() from Question.cpp to Survey.cpp
- * Survey class creates array of Question and aggregates instance
-   of Votes, then rewrites hiScore in start().
- * Moved Votes class to User class public members. This way I can access votes
- * functions without writing extra get() in User class.
- * Printed Votes object in User:wrtVotes();  
- * Wrote Votes[] to userData.txt file. Added 14 chars to charCount in reWrtTxt().
- * When User is logged in, Votes array within User is written 
-   to binary and read it from binary. correctly. It writes and rewrites to text file.
-   You can't loop through votes while reading from binary cause it messes it up.
- * I realized i wasn't setPwrd() inside of readBin_setArray(). idk how it still worked? lol
- * Case 4 in adminPortal() calls editVotes();
- * Inside of editVotes() and delete() I added usrArr[ind]-> to readBin_setArray().
- * Aggregated Votes QueSums[3] in Admin's variables to represent the total 
- * number of votes each question received.
- * Changed hiScore to voteSiz
- * Created 3 int array to hold the survey results in Admin.
-   Added setQueSums(), printQueSums(), getChart()
+ * Purpose:  survey project v6
   
- 
  v6:
  * Change Que1Sum, Que2Sum, Que3Sum to Votes QueSums[3].
  * Aggregated Question array inside of Survey, so I can print
  * questions & answers in Admin printQueSums().
- * 
- * To Do: 
  * Print percentages in printQueSums(). 
+ 
+ To Do: 
  * Make readInput() read inputs from file again 
  * Add a bool isDeleted[totalRec] to Admin as a flag for deleted records? 
  * DRY. Clean up repetitive code.
- */
+*/
 
 //System Libraries
 #include <iostream>  //Input/Output Library
@@ -97,10 +32,8 @@ using namespace std;  //STD Name-space where Library is compiled
 #include "Admin.h"
 #include "Survey.h"
 
-
 //Global Constants not Variables
 //Math/Physics/Science/Conversions/Dimensions
-
 
 //Code Begins Execution Here with function main
 int main(int argc, char** argv) {
@@ -130,8 +63,7 @@ int main(int argc, char** argv) {
                 break;
             } 
             case 2: // User sign up for new account
-            {
-               
+            {               
                 user.signUp();
                 //cout<<"\ninside main() after signUp() object looks like: ";
                 //user.printUsr();
@@ -199,8 +131,3 @@ int main(int argc, char** argv) {
         }      
     return 0;
 }
-
-
-//*********************************************************
-//              Function Definitions
-//*********************************************************

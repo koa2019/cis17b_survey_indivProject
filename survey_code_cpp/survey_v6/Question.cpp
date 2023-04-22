@@ -23,40 +23,6 @@ Question::Question(){
     }
 }
 
-
-//*********************************************************
-//
-//*********************************************************
-//void Question::readQAFile(){
-//    
-//    //cout<<"\n Hit Question::readQAFile()\n";
-//    fstream in;
-//    in.open("surveyQA.txt", ios::in);
-//    if(in.fail()){ cout<<"\nError opening surveyQA.txt\n"; exit(0); }
-//
-//
-//    int i = 0;
-//    string str0 = "", str1 = "", str2 = "", str3 = "";
-//     
-//    // Reset question class object    
-//    while(!in.eof()){        
-//        
-//        getline(in,str0);
-//        getline(in,str1);
-//        getline(in,str2);
-//        getline(in,str3);
-//
-//        question[i].setQA(str0,str1,str2,str3);
-//        //question[i].setQA(str0,str1,str2,str3);
-//        //question[i].prntQA();
-//        i++;
-//    }    
-//    
-//    numQA = (i > numQA) ? i : numQA;
-//    in.close();
-//}
-
-
 //*********************************************************
 //              Reset each question with this string
 //*********************************************************
