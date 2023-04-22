@@ -1,7 +1,7 @@
 /* File:   User.h
  * Author: DanYell
  * Created: 04-18-23, 12 PM
-  * Purpose:  template_adminUserClass_aggregates. v1.4
+ * Purpose:  template_adminUserClass_aggregates. v1.4
 */
 
 #ifndef USER_H
@@ -31,9 +31,10 @@ public:
     User();   // Default constructor
     User(int); // Constructor 2
     User(string); // Constructor #3
-    User(string,string,string,int,int,int); // Constructor #4
+    User(string,string,string); // Constructor #4
+    User(string,string,string,int,int,int); // Constructor #5
     User(int,string,string,string);
-    ~User(){cout<<"\nHit User Destructor()."; }
+    //~User(){cout<<"\nHit User Destructor()."; }
     
     // Call Votes class functions
     void wrtVotes();
@@ -43,8 +44,7 @@ public:
     void addNumRec(){ numRec++; } // increment total records by 1
     void setNumRec(int num) { numRec = num; }
     void wrtNumRec();    // Write the total number of records in UsrData.bin
-    int  getNumRec() const { return numRec;}
-    
+    int  getNumRec() const { return numRec;}    
     
     // Mutators
     void setNamSiz(int size){  namSiz = size; }
@@ -53,14 +53,11 @@ public:
     void setName(string str){  name = str; namSiz = name.size(); }
     void setEmail(string str){ email = str; emaiSiz = email.size(); }
     void setPwrd(string str){  password = str; pwrdSiz = password.size();}
-    void setVoteSiz(int s) { voteSiz = s; }
-    
-    
+    void setVoteSiz(int s) { voteSiz = s; }    
     
     // Create new User 
     void signUp();  // Calls functions to create 1 or more profiles
-    void readInputFile();  // Reads 27 records from a file
-    
+    void readInputFile();  // Reads 27 records from a file    
     
     // Helper functions for validating member variables      
     bool isName();
@@ -72,14 +69,12 @@ public:
     bool hasSpecialChars(string);
     bool confrmEmail(string);
     string toLowerCase(string);
-
     
     // Write to files
     void wrtTxt();
     void wrtBin();
     void reWrtTxt(long);  // Rewrite 1 record in User's text file
-    void reWrtBin(long);  // Rewrite 1 record in User's binary file
-    
+    void reWrtBin(long);  // Rewrite 1 record in User's binary file    
     
     // Accessors 
     int getVoteSiz() const {return voteSiz;}

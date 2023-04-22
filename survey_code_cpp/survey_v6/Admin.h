@@ -7,6 +7,8 @@
 #define ADMIN_H
 #include <string>   // string var
 #include <iostream> // convert int to string type
+#include <iomanip> // setprecision()
+#include <fstream>
 #include "User.h"   // Admin aggregates instance of User
 #include "Votes.h"
 using namespace std;  //STD Name-space where Library is compiled
@@ -29,7 +31,6 @@ public:
     Admin(string, string, string ); // Constructor #3   
     ~Admin();   // Destructor
     void copy2Usr(User &,const int);  // copy Admin variables to instance of User
-    
     
     // Mutator
     void setRecSiz(int n){ recSiz = n;}

@@ -1,6 +1,6 @@
-#include <string>
-#include <iostream>
-#include <fstream>
+//#include <string>
+//#include <iostream>
+//#include <fstream>
 #include "Admin.h"
 #include "Survey.h" 
 #include "Votes.h"
@@ -28,8 +28,6 @@ Admin::Admin(){
         }        
        
         readBin_setArray();  // Reset user array with record values read in from binary file
-        //setQueSums();
-        //printQueSums();
 }
 
 //******************************************************************************
@@ -108,14 +106,12 @@ int Admin::isUsrLogin(){
         cout<<"Enter email:    ";
         cin >> tempE;
     } while(!(user.isMinSize(tempE,8)) || !(user.confrmEmail(tempE)));
-    //cout<<tempE<<endl;
-                
+                  
     do{
         cout<<"Enter password: ";
         cin >> tempPw;       
     } while(!(user.isMinSize(tempPw,7)));
     cin.ignore();
-    //cout<<tempPw;
        
     // look for this email in usrBin.dat. If it exists, then
     // compare email and password with record in binary file
@@ -166,15 +162,15 @@ void Admin::adminLogin(){
     tempPwrd = user.getPwrd();
     //*************************************************************************
     
-    //do{        
+    do{        
         cout<<"\nEnter username: \n";
-        //cin >> tempNam;
-        //isName = user.isMinSize(tempNam,2);
-    //} while(!isName);
+        cin >> tempNam;
+        isName = user.isMinSize(tempNam,2);
+    } while(!isName);
     
     cout<<"Enter password: \n";
-    //cin >> tempPwrd;   
-    //cin.ignore();
+    cin >> tempPwrd;   
+    cin.ignore();
     
     isName = user.isStrEqual(user.getName(),tempNam);
     isPwrd = user.isStrEqual(user.getPwrd(),tempPwrd);
@@ -203,9 +199,10 @@ void Admin::adminPortal(){
             <<"2: Find one index\n\t"
             <<"3: Find by email\n\t"
             <<"4: Edit Votes\n\t"
-            <<"5: Delete a user\n\t"
-            <<"6: Reset binary and text files\n\t"
-            <<"7: Update Admin's Profile\n\t"
+            <<"5: Show Survey Results\n\t"
+            <<"6: Delete a user\n\t"
+            <<"7: Reset binary and text files\n\t"
+            <<"8: Update Admin's Profile\n\t"
             <<"9: Logout\n\t"
             <<"Enter a number: ";
         cin>>choice;
@@ -214,7 +211,7 @@ void Admin::adminPortal(){
         switch(choice){
             case 1:
             {   
-                readAdBin();  // Reset user array with records read in from latest binary file
+                readBin_setArray();  // Reset user array with records read in from latest binary file
                 printAllUsr(); // Print usrArr[]   
                 pause();
                 break;
@@ -237,27 +234,36 @@ void Admin::adminPortal(){
             case 4:  
             {    
                 editVotes();
+                readBin_setArray();  // Reset user array with records read in from latest binary file
+                printQueSums();     // Print survey results
                 pause();
                 break;
             }
-            case 5: 
+            case 5:  
+            {    
+                
+                readBin_setArray();  // Reset user array with records read in from latest binary file
+                printQueSums();     // Print survey results
+                pause();
+                break;
+            }
+            case 6: 
             {   
                 deleteUsr(); // Delete record in binary & text
-                //    if(tempName.compare(0,6,"xxxxxx") == 0){
-                //
-                //        cout<<"\nYou can not edit this record.\n"
-                //            <<"This record was deleted.\n";
-                //    } 
+                //if(tempName.compare(0,6,"xxxxxx") == 0){
+                //   cout<<"\nYou can not edit this record.\n"
+                //       <<"This record was deleted.\n";
+                //} 
                  pause();
                 break;
             }             
-            case 6:   // Reset files by erasing binary & text file, then creates records in 
+            case 7:   // Reset files by erasing binary & text file, then creates records in 
             {        // User binary with records. Use after testing & altering records.      
                 user.readInputFile();
                 readBin_setArray();
                 break;
             }
-            case 7:
+            case 8:
             {                
                 updateAdmin();        
                 break;
@@ -267,7 +273,7 @@ void Admin::adminPortal(){
                 return;
             }
         }
-    } while(choice>=1 && choice<=7);
+    } while(choice>=1 && choice<=8);
 }
 
 
@@ -398,13 +404,7 @@ void Admin::readBin_setArray(){
     }    
     
     i = (i > totalRec) ? i : totalRec;
-    
-//    // Reset arrays to zero
-//    for(int i=0; i < NUMQQ; i++){ 
-//        QueSums[i].setVoteArr(0,0,0);
-//    }
-    setQueSums();
-    
+    setQueSums();    
     inBin.close();              
 }
 
@@ -477,27 +477,43 @@ void Admin::setQueSums(){
 /******************************************************************/ 
 void Admin::printQueSums(){
     
-    //cout<<"\n\tHit printQueSums()";
+    cout<<"\n\t*****Survey Results*****";
     
     // Loop through usrArr[] & print their votes[] 
+    cout << endl << endl;
     for(int i=0; i < totalRec; i++){   
         usrArr[i]->printAllVotes();    
     }
     
+    cout << fixed << setprecision(0) << endl;
+    cout << "   Q1 total votes:" << totalRec << endl;
+    cout << "   Q2 total votes: " << setw(1) << " " << totalRec << endl;
+    cout << "   Q3 total votes: " << setw(3) << " " << totalRec << endl;
+     
+    
     Survey survey;
-        
+     
+    float tRecFloat = totalRec;
+    float avg = 0.0f;
+    
     for(int i=0; i < NUMQQ; i++){ 
         
-        cout << "\n\t  Question " << i+1  << " results\n";
-        cout << setw(4) << " " << survey.question[i].getQIndx(0)  << endl;
-              
-        cout << setw(18) << survey.question[i].getQIndx(1) << "  "  << QueSums[i].getVote(0) << " votes ";
+        cout << "\n\n\t  Question " << i+1  << " results\n";
+        cout << setw(4) << " " << survey.question[i].getQIndx(0) << endl << endl;
+             
+        avg = (QueSums[i].getVote(0)/tRecFloat)*100;
+        cout << setw(18) << survey.question[i].getQIndx(1) << "  "  
+             << QueSums[i].getVote(0) << " vote(s) " << setw(3) << avg << "%  ";
         getChart(QueSums[i].getVote(0));
         
-        cout << setw(18) << survey.question[i].getQIndx(2) << "  " << QueSums[i].getVote(1) << " votes ";
+        avg = (QueSums[i].getVote(1)/tRecFloat)*100;
+        cout << setw(18) << survey.question[i].getQIndx(2) << "  " 
+             << QueSums[i].getVote(1) << " vote(s) " << setw(3) << avg << "%  ";
         getChart(QueSums[i].getVote(1));
         
-        cout << setw(18) << survey.question[i].getQIndx(3) << "  "  << QueSums[i].getVote(2) << " votes ";
+        avg = (QueSums[i].getVote(2)/tRecFloat)*100;
+        cout << setw(18) << survey.question[i].getQIndx(3) << "  "
+             << QueSums[i].getVote(2) << " vote(s) " << setw(3) << avg << "%  ";
         getChart(QueSums[i].getVote(2));
     }    
 }
@@ -518,7 +534,7 @@ void Admin::getChart(int qSum) const{
 //
 /******************************************************************/ 
 void Admin::printAllVotes(){
-    cout << "\n Record " << this->user.getNumRec();  
+    cout << "\n Record " << setw(2) << this->user.getNumRec();  
     cout<<"  votes[ ";
     this->user.votes.prntVotes(); 
 }
@@ -539,23 +555,22 @@ void Admin::editVotes(){
     cout<<"\nWhich record do you want to edit?\n";
     getIndex(indx);          
     
+    cout<<"\n\nEnter the answer for question 1. Number 1-"<<NUMQQ<<endl;
+    cin >> num1;   
+    cout<<"Enter the answer for question 2. Number 1-"<<NUMQQ<<endl;
+    cin >> num2; 
+    cout<<"Enter the answer for question 3. Number 1-"<<NUMQQ<<endl;
+    cin >> num3;
+    cin.ignore();
     
-    //cout<<"Enter the answer for question 1. Number 1-"<<NUMQQ<<endl;
-    //cin >> num1;   
-    //cout<<"Enter the answer for question 2. Number 1-"<<NUMQQ<<endl;
-    //cin >> num2; 
-    //cout<<"Enter the answer for question 3. Number 1-"<<NUMQQ<<endl;
-    //cin >> num3;
-  
-    usrArr[indx]->user.votes.setVoteArr(num1,num2,num3);   
+    usrArr[indx]->user.votes.setVoteArr(num1,num2,num3);  
    
     
     long recLoc = usrArr[indx]->begnFile;
     usrArr[indx]->user.reWrtBin(recLoc);
     usrArr[indx]->readBin_setArray(); // Reset usrArr after the binary file is updated   
-    setQueSums();
-    //cout<<"\n\nRecord successfully updated.";
-    //usrArr[indx]->printAdUsr();          // confirm this record was reset    
+    cout<<"\n\nRecord successfully updated.\n";
+    usrArr[indx]->printAdUsr();
 }
 
 

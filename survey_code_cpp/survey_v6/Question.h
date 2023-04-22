@@ -7,18 +7,14 @@
 #define QUESTION_H
 #include <string>
 #include <array>
-//#include "Votes.h"
-//#include "User.h"
 using namespace std;
 
 const int QSIZE = 4;
 
-class Question {
-    
+class Question {    
 protected: 
     int numQA;
     string question[QSIZE]; //[question, ans1,ans2,ans3]
-    //Question *question = nullptr;
     
 public:
     Question(); // Default Constructor
@@ -26,16 +22,11 @@ public:
     
     // Mutator
     void setQIndx(int i, string str){ question[i] = str; }
-    void setQA(string,string,string,string);
-   
+    void setQA(string,string,string,string);   
     
     // Accessors
     string getQIndx(int i){ return question[i]; }
     void prnt1QA();
-    //void readQAFile();
-  
-
-    
 };
 #endif /* QUESTION_H */
 

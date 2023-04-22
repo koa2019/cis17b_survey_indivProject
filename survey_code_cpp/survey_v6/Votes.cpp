@@ -47,7 +47,7 @@ void Votes::prntVotes()const{
     for(int i=0; i < NUMQQ; i++){
         cout <<  votes[i] << " ";
     }
-    cout << "] \n";
-    cout<<setw(17)<<"Total votes:"<<setw(2)<< numVote <<"\n"; 
+    cout << "]";
+    //cout << setw(2)<< numVote << " total votes."; 
 }
 

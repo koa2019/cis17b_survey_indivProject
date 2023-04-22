@@ -9,12 +9,10 @@
 #include <iomanip>  // setw()
 using namespace std;
 
-
 const int NUMQQ = 3;
 const int VOTESIZE = NUMQQ+1;
 
-class Votes {
-    
+class Votes {    
 
     public:
     int votes[NUMQQ]; // Array holds how many votes each option received
@@ -40,7 +38,5 @@ class Votes {
     int getNumVote() const { return numVote; }  
     void prntVotes() const;
 };
-
-
 #endif /* VOTES_H */
 

@@ -1,7 +1,7 @@
 /* File:   Votes.h
  * Author: DanYell
  * Created on April 14, 2023, 1:30 AM
- */
+*/
 
 #ifndef SURVEY_H
 #define SURVEY_H
@@ -14,8 +14,7 @@ using namespace std;
 
 class Survey {
     
-protected:
-    
+protected:    
     bool isTrue;
 
 public:
@@ -29,9 +28,7 @@ public:
     void readQAFile();
     
     // Accessor
-    //void callQIndx(){ question[0]
     void pause(char ch='c');
-
 };
 #endif /* SURVEY_H */
 
