@@ -1,10 +1,6 @@
-//#include <string>
-//#include <iostream>
-//#include <fstream>
 #include "Admin.h"
 #include "Survey.h" 
 #include "Votes.h"
-#include "Question.h"
 using namespace std;  //STD Name-space where Library is compiled
 
 
@@ -75,7 +71,7 @@ Admin::~Admin() {
 
 void Admin::copy2Usr(User &user2, const int indx){
    
-    //cout<< "\n inside copy2Usr()";
+    cout<< "\n Copying Admin object to a User Object...\n";
     user2.setNumRec(usrArr[indx]->user.getNumRec());
     user2.setName(usrArr[indx]->user.getName());       
     user2.setEmail(usrArr[indx]->user.getEmail());
@@ -98,7 +94,7 @@ int Admin::isUsrLogin(){
     int num = rand()%(0+totalRec);
     
     //string tempE = "", tempPw = "";
-    //cout<<"\n\n*****Hide this after testing*****\n"<< usrArr[num]->user.getEmail()<<"\n"<< usrArr[num]->user.getPwrd()<<"\n*********************************\n";
+    cout<<"\n\n*****Hide this after testing*****\n"<< usrArr[num]->user.getEmail()<<"\n"<< usrArr[num]->user.getPwrd()<<"\n*********************************\n";
     string tempE = usrArr[num]->user.getEmail(), tempPw =usrArr[num]->user.getPwrd(); // use for testing when you don't want to type it in each time
     
     cout<<"\nEmail is case sensitive. Must use lowercase letters.\n";
@@ -198,8 +194,8 @@ void Admin::adminPortal(){
             <<"1: Show all users\n\t"
             <<"2: Find one index\n\t"
             <<"3: Find by email\n\t"
-            <<"4: Edit Votes\n\t"
-            <<"5: Show Survey Results\n\t"
+            <<"4: Edit a User's Votes\n\t"
+            <<"5: Show Survey Stats\n\t"
             <<"6: Delete a user\n\t"
             <<"7: Reset binary and text files\n\t"
             <<"8: Update Admin's Profile\n\t"
@@ -234,8 +230,8 @@ void Admin::adminPortal(){
             case 4:  
             {    
                 editVotes();
-                readBin_setArray();  // Reset user array with records read in from latest binary file
-                printQueSums();     // Print survey results
+                //readBin_setArray();  // Reset user array with records read in from latest binary file
+                //printQueSums();     // Print survey results
                 pause();
                 break;
             }
@@ -371,8 +367,7 @@ void Admin::readBin_setArray(){
         
         
         // Read each element in Votes array
-        // Accumulate number of bits in Votes array
-        
+        // Accumulate number of bits in Votes array        
         
         inBin.read(reinterpret_cast<char *>(&num) , sizeof(int));
         usrArr[i]->user.votes.setVoteIndx(0,num);
@@ -395,10 +390,7 @@ void Admin::readBin_setArray(){
         // if its the first record,then set begnGile to zero
         long bFile = (i==0)? 0L : (cursor-thisSum); 
         usrArr[i]->setBegnFile(bFile);
-        usrArr[i]->setRecSiz(thisSum);
-       
-        //cout<<"\ni = "<<i<<" recSiz = "<<usrArr[i]->recSiz<<"  begnFile = "<<usrArr[i]->begnFile<<endl;   
-
+        usrArr[i]->setRecSiz(thisSum);       
         //usrArr[i]->printAdUsr();
         i++; 
     }    
@@ -464,8 +456,7 @@ void Admin::setQueSums(){
             
         } // ends voteIndx < NUMQQ
         
-        //cout<<" After tallying sum \n";
-        //printQueSums();
+        //cout<<" After tallying sum \n"; printQueSums();
         
     } // ends i < totalRec 
 }
@@ -473,44 +464,54 @@ void Admin::setQueSums(){
 
 
 /******************************************************************/ 
-//
+//                  Print Survey Results
 /******************************************************************/ 
 void Admin::printQueSums(){
     
     cout<<"\n\t*****Survey Results*****";
+    cout << fixed << setprecision(0) << endl;
+    
     
     // Loop through usrArr[] & print their votes[] 
     cout << endl << endl;
     for(int i=0; i < totalRec; i++){   
         usrArr[i]->printAllVotes();    
     }
+    cout << endl << endl;
     
-    cout << fixed << setprecision(0) << endl;
-    cout << "   Q1 total votes:" << totalRec << endl;
-    cout << "   Q2 total votes: " << setw(1) << " " << totalRec << endl;
-    cout << "   Q3 total votes: " << setw(3) << " " << totalRec << endl;
-     
+    cout << "\t\t a1 a2 a3\n";
+    for(int i=0; i < NUMQQ; i++){
+        cout << "   Q" << i+1 << " total votes[ ";
+        QueSums[i].prntVotes();
+        cout << endl;
+    }     
     
     Survey survey;
      
     float tRecFloat = totalRec;
-    float avg = 0.0f;
+    float avg = 0.0f;    
     
+    // Print results for each question and its answers
     for(int i=0; i < NUMQQ; i++){ 
         
-        cout << "\n\n\t  Question " << i+1  << " results\n";
-        cout << setw(4) << " " << survey.question[i].getQIndx(0) << endl << endl;
+        cout << "\n\n\t  Question " << i+1  << " results\n\n";
+        cout << setw(4) << " " << survey.question[i].getQIndx(0) << endl;
              
+        // Print total votes answer 1 received 
         avg = (QueSums[i].getVote(0)/tRecFloat)*100;
         cout << setw(18) << survey.question[i].getQIndx(1) << "  "  
              << QueSums[i].getVote(0) << " vote(s) " << setw(3) << avg << "%  ";
         getChart(QueSums[i].getVote(0));
         
+        
+        // Print total votes answer 2 received 
         avg = (QueSums[i].getVote(1)/tRecFloat)*100;
         cout << setw(18) << survey.question[i].getQIndx(2) << "  " 
              << QueSums[i].getVote(1) << " vote(s) " << setw(3) << avg << "%  ";
         getChart(QueSums[i].getVote(1));
         
+        
+        // Print total votes answer 3 received 
         avg = (QueSums[i].getVote(2)/tRecFloat)*100;
         cout << setw(18) << survey.question[i].getQIndx(3) << "  "
              << QueSums[i].getVote(2) << " vote(s) " << setw(3) << avg << "%  ";
@@ -520,7 +521,7 @@ void Admin::printQueSums(){
 
 
 /******************************************************************/ 
-//
+//              Print histogram
 /******************************************************************/ 
 void Admin::getChart(int qSum) const{   
     for(int i = 0; i < qSum; i++){        
@@ -555,12 +556,20 @@ void Admin::editVotes(){
     cout<<"\nWhich record do you want to edit?\n";
     getIndex(indx);          
     
-    cout<<"\n\nEnter the answer for question 1. Number 1-"<<NUMQQ<<endl;
-    cin >> num1;   
-    cout<<"Enter the answer for question 2. Number 1-"<<NUMQQ<<endl;
-    cin >> num2; 
-    cout<<"Enter the answer for question 3. Number 1-"<<NUMQQ<<endl;
-    cin >> num3;
+    do {
+        cout<<"\n\nEnter the answer for question 1. Number 1-"<<NUMQQ<<endl;
+        cin >> num1;  
+    } while(!(num1>=1 && num1<=NUMQQ));
+    
+    do {
+        cout<<"Enter the answer for question 2. Number 1-"<<NUMQQ<<endl;
+        cin >> num2; 
+    } while(!(num2>=1 && num2<=NUMQQ));
+
+    do {    
+        cout<<"Enter the answer for question 3. Number 1-"<<NUMQQ<<endl;
+        cin >> num3;
+    } while(!(num2>=1 && num2<=NUMQQ));
     cin.ignore();
     
     usrArr[indx]->user.votes.setVoteArr(num1,num2,num3);  
@@ -568,9 +577,10 @@ void Admin::editVotes(){
     
     long recLoc = usrArr[indx]->begnFile;
     usrArr[indx]->user.reWrtBin(recLoc);
-    usrArr[indx]->readBin_setArray(); // Reset usrArr after the binary file is updated   
+    readBin_setArray(); // Reset usrArr after the binary file is updated   
     cout<<"\n\nRecord successfully updated.\n";
     usrArr[indx]->printAdUsr();
+    printQueSums();     // Print survey results
 }
 
 
@@ -605,7 +615,7 @@ void Admin::deleteUsr(){
     usrArr[indx]->user.setPwrd(temp);       // Reset password 
     usrArr[indx]->user.setVoteSiz(0);       // Reset voteSiz
     usrArr[indx]->user.reWrtBin(usrArr[indx]->begnFile); // rewrites this record in binary & text files  
-    usrArr[indx]->readBin_setArray();          // Reset usrArr[] after the binary file is updated  
+    readBin_setArray();          // Reset usrArr[] after the binary file is updated  
     cout<<"\n\nRecord successfully deleted.";
     usrArr[indx]->printAdUsr();          // confirm this record was reset
 }
@@ -655,14 +665,21 @@ bool Admin::findByEmail(string tempEmail, int &indx){
 void Admin::getByEmail(){
     
     int ind = 0, count = 0, size = 0;
+    int num = rand()%(0+totalRec);
     string tempEmail = "";
+    
+    
+    cout<<"\n\n*****Hide this after testing*****\n"<< usrArr[num]->user.getEmail()<<"\n*********************************\n";
+    tempEmail = usrArr[num]->user.getEmail(); // use for testing when you don't want to type it in each time
+    //tempEmail = "homer@simp.com";
+    //tempEmail = "marge@simp.com";
+    //tempEmail = "lucy@beatles.com";  
+    
     
     cout<<"\nEnter the email you want to find: ";
     cin >> tempEmail;
-    
-    //tempEmail = "homer@simp.com";
-    //tempEmail = "marge@simp.com";
-    //tempEmail = "lucy@beatles.com";          
+    cin.ignore();    
+            
     cout <<"\n\nLooking for " << tempEmail << "...\n\n";   
     
     bool foundEmail = false;  
@@ -671,15 +688,15 @@ void Admin::getByEmail(){
     
     while( (!foundEmail) && (count < totalRec) ){
         
-        size = usrArr[count]->user.getEmaiSiz(); // get emaiSiz read from binary
-        binaryEmail.resize(size);                 // resize string to emaiSiz
+        //size = usrArr[count]->user.getEmaiSiz(); // get emaiSiz read from binary
+        //binaryEmail.resize(size);                 // resize string to emaiSiz
         binaryEmail = usrArr[count]->user.getEmail(); // get email read from binary
         foundEmail = user.isStrEqual(tempEmail, binaryEmail); // compare binary email with email inputted by user
         //cout<< "\n\t" << tempEmail << "==" << binaryEmail << endl ;
         
         if(foundEmail){
             int indx = usrArr[count]->user.getNumRec();
-            cout<<"Located " << tempEmail << "'s profile";
+            cout<<"Located " << tempEmail << "'s profile.\n";
             usrArr[indx]->printAdUsr();
             count = totalRec;
         } 

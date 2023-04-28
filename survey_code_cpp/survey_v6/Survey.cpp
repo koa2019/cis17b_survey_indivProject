@@ -1,8 +1,3 @@
-#include <string>
-#include <array>
-#include <iostream> // cout
-#include <fstream> // fstream
-#include <iomanip> // setw()
 #include "Survey.h"
 #include "Question.h"
 #include "Votes.h" 
@@ -33,9 +28,6 @@ Survey::Survey(){
 bool Survey::start(User &user, const long recordLoc){
          
     int ans = 0, count = 0;
-    //cout<<"\n\tgetVote=" << votes.getVote(3) << endl;
-    
-//    readQAFile();
     
     // Loop through total number of questions
     for(int i=0; i < NUMQQ; i++){
@@ -54,25 +46,21 @@ bool Survey::start(User &user, const long recordLoc){
         
         // Reset votes object. Each indx represents their answer
         user.votes.setVoteIndx(i,ans);
-        //user.votes.increNumVote();  
-        //cout<<"\n\t getVote=" << votes.getVote(3) << endl;
     }
     
     // Print this user's voting results
     //user.votes.prntVotes();
-    //user.wrtVotes();
     
-    isTrue = true; // set flag
-
-
-    if(!isTrue){ // if player 1 is NOT winner
-        
-        cout<<"\n\nSurvey was not completed!\n"; 
-        return false; 
+    for(int i=0; i < NUMQQ; i++){
+        if(user.votes.getVote(i) == 0){ 
+            isTrue = false;             // set flag 
+            cout<<"\n\nSurvey was not completed!\n"; 
+            return isTrue; 
+        }
     }
-    else {       
-        return isTrue; // return true and Admin will confirm files were rewritten
-    }
+
+    isTrue = true;
+    return isTrue; // return true and Admin will confirm files were rewritten   
 }
 
 
@@ -103,15 +91,4 @@ void Survey::readQAFile(){
         i++;
     }     
     in.close();
-}
-
-
-//******************************************
-//      pause screen before continuing
-//******************************************
-void Survey::pause(char ch) {
-    
-    string msg = ch=='r' ? "roll" : "continue";    
-    cout<<endl<<setw(6)<<' '<<"Press enter to " << msg << ".";   
-    cin.get();
 }

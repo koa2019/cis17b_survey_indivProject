@@ -37,14 +37,11 @@
  * 
  * 
  v4: 
- * Had to create Survey class and move Questions to it because i skipped a step.
- * In Questions class I made it 4 strings instead of an array of strings.
- * Questions reads its questions and possible answers from a text file.
- * In Questions getSurve() I created an array of questions, prompted User,
-   and saved their answers to an instance of Votes.
- * Added Votes structure and aggregated an instance of it in Questions class.
- * In main() menu case 4 allows you to take a survey as a guest and doesn't save
- * its results to any files.
+ * Changed Questions class I made it 4 strings instead of an array of strings.
+ •	Question: getSurvey() reads a text file and saves it to a static array of Question objects.
+•	Added Votes structure and aggregated an instance of it in Questions class.
+•	getSurvey() prints one question and its three possible answers, gets the user’s input, and saves their answers to an instance of a Votes object.
+
  * 
  * 
  To Do: 

@@ -16,15 +16,9 @@ class Votes {
 
     public:
     int votes[NUMQQ]; // Array holds how many votes each option received
-    int numVote;
+    int numVote;    
     
-    // Default constructor
-    Votes(){ 
-        numVote = 0;
-        for(int i=0; i < NUMQQ; i++){
-            votes[i] = 0;
-        }
-    }
+    Votes();// Default constructor
     
     // Mutators
     void setVoteIndx(int i, int value);

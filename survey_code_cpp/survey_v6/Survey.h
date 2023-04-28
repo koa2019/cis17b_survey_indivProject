@@ -6,7 +6,9 @@
 #ifndef SURVEY_H
 #define SURVEY_H
 #include <string>
-#include <array>
+#include <iostream> // cout
+#include <fstream> // fstream
+#include <iomanip> // setw()
 #include "Question.h"
 #include "Votes.h"
 #include "User.h"
@@ -26,9 +28,6 @@ public:
     // Mutators
     bool start(User &, const long); 
     void readQAFile();
-    
-    // Accessor
-    void pause(char ch='c');
 };
 #endif /* SURVEY_H */
 

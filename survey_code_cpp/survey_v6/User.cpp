@@ -423,7 +423,7 @@ bool User::isPwrd(){
        
         cout<<"\nPassword must be at least "
                 <<MINSIZE<<" characters long, and "  
-                <<"\ninclude: 1 uppercase letter, 1 digit, "
+                <<"\ninclude: 1 uppercase letter, 1 digit,\n"
                 <<"and 1 special character (! $ #). ";
         
         do { // Loop until password is correct length 
@@ -666,15 +666,16 @@ void User::printUsrRec() const{
    
 void User::signUp(){  
 
+    cout << "\n*** Sign up ***\n";
     // If user's input was valid, then write it files
     if(isName() && isEmail() && isPwrd()){       
         
-        wrtTxt();  // Write to text file
-        wrtBin(); // Write to binary file 
+        wrtTxt();        // Write to text file
+        wrtBin();        // Write to binary file 
         cout<<"\nProfile successfully created.";
-        printUsr();     // Print 1 profile
+        printUsr();       // Print 1 profile
         setNumRec(numRec);
-        addNumRec(); // increment total # of profiles created         
+        addNumRec();      // increment total # of profiles created         
         wrtNumRec();
         
     } else { cout<<"\nOops! Profile not created.\n"; }
@@ -705,17 +706,15 @@ void User::readInputFile(){
     out.close();
     oB.close();
 
-    User user1("homer simpson","homer@simp.com","Homer!23",1,1,1);
-    User user2("marge simpson","marge@simp.com","Marge$ab",2,2,2);
-    User user3("lisa simpson","lisa@simp.com","Lisa!2345" ,3,3,2);
+    User user1("homer simpson","homer@simp.com","Homer!23");
+    User user2("marge simpson","marge@simp.com","Marge$23");
+    User user3("lisa simpson","lisa@simp.com","Lisa!2345");
     User user4("master yoda","yoda@jedi.com","Yoda!234");
     User user5("anakin skywalker","anakin@jedi.com","Anakin!2");
     User user6("lucy sky","lucy@sky.com","Lucy#2345"); 
-    User user7("harry potter","harry@potter.com","Harry!23");
-    User user8("jane smith","jane@smith.com","Jane!234");
-    User user9("mickey mouse","mickey@disney.com","Mickey!23");
-    User use10("minnie mouse","minnie@disney.com","Minnie!23");
-    User use11("taylor swift","taylor@swift.com","Taylor!23");
+    User user7("harry potter","harry@potter.com","Harry#23");
+    User user8("mickey mouse","mickey@disney.com","Mickey!23");
+    User user9("minnie mouse","minnie@disney.com","Minnie!23");
     
    
     // Open & read input.txt
