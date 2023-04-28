@@ -1,11 +1,20 @@
-#include <iostream>
-#include <iomanip>
-#include <array>
 #include "Votes.h"
 using namespace std;
 
 //*********************************************************
-//
+//                    Default Constructor
+//*********************************************************
+Votes::Votes(){ 
+    numVote = 0;
+    for(int i=0; i < NUMQQ; i++){
+        votes[i] = 0;
+    }
+}
+
+
+//*********************************************************
+//                  Set index in votes array and 
+//                  increase numVote by 1
 //*********************************************************
 void Votes::setVoteIndx(int i, int value){ 
     votes[i] = value; 
@@ -14,7 +23,7 @@ void Votes::setVoteIndx(int i, int value){
 
 
 //*********************************************************
-//
+//              Set all elements in votes array
 //*********************************************************
 void Votes::setVoteArr(int a, int b, int c){
     //cout<<"\n\tHit setVotArr()\n";
@@ -41,7 +50,7 @@ void Votes::setVoteArr(){
 
 
 //*********************************************************
-//
+//                  Print votes array 
 //*********************************************************  
 void Votes::prntVotes()const{       
     for(int i=0; i < NUMQQ; i++){

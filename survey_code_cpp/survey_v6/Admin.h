@@ -26,10 +26,10 @@ private:
     
 public:
     
-    Admin();     // Default constructor
-    Admin(int); // Constructor #2                
-    Admin(string, string, string ); // Constructor #3   
-    ~Admin();   // Destructor
+    Admin();                          // Default constructor
+    Admin(int);                       // Constructor #2                
+    Admin(string, string, string );   // Constructor #3   
+    ~Admin();                         // Destructor
     void copy2Usr(User &,const int);  // copy Admin variables to instance of User
     
     // Mutator
@@ -40,7 +40,7 @@ public:
     void editVotes(); // Reassign votes[] in User and rewrite in binary & text files
     
     // Reads & writes Admin binary & text files
-    int isUsrLogin();        // Calls functions to verify login credentials
+    int isUsrLogin();    // Calls functions to verify login credentials
     void adminLogin();  // checks admin login 
     void adminPortal(); // if Admin is logged in, then display menu   
     void readBin_setArray(); // reads User's binary file
@@ -54,15 +54,15 @@ public:
     int  getBegnFile(){ return begnFile;}
     int  getBegnFile(const int indx){ return usrArr[indx]->begnFile;}
     void getIndex(int &);
-    void getByEmail(); // adminPortal() calls it
-    bool findByEmail(string, int &); // isUsrLogin() calls it
-    void print1Admin()const;  // Print Admin's login info
-    void printAdUsr() const; // prints all member variable's in an Admin + User's record
-    void printAdUsr(int) const; // passes indx to print
-    void printAllUsr() const;  // prints usrArr[]  
-    void printAllVotes();
-    void printQueSums();
-    void getChart(int) const;
+    void getByEmail();                // adminPortal() calls it
+    bool findByEmail(string, int &);  // isUsrLogin() calls it
+    void print1Admin()const;          // Print Admin's login info
+    void printAdUsr() const;          // prints all member variable's in an Admin + User's record
+    void printAdUsr(int) const;       // passes indx to print
+    void printAllUsr() const;        // prints usrArr[]  
+    void printAllVotes();            // prints votes array
+    void printQueSums();             // Prints survey results
+    void getChart(int) const;        // prints histogram
     void pause(char ch='c');
 };
 #endif /* ADMIN_H */

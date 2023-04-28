@@ -37,6 +37,9 @@ public:
     //~User(){cout<<"\nHit User Destructor()."; }
     
     // Call Votes class functions
+    void setVoteSiz(int s) { voteSiz = s; }
+    bool isVoteSiz(int);
+    int getVoteSiz() const {return voteSiz;}
     void wrtVotes();
     
     // numRec functions
@@ -53,7 +56,7 @@ public:
     void setName(string str){  name = str; namSiz = name.size(); }
     void setEmail(string str){ email = str; emaiSiz = email.size(); }
     void setPwrd(string str){  password = str; pwrdSiz = password.size();}
-    void setVoteSiz(int s) { voteSiz = s; }    
+       
     
     // Create new User 
     void signUp();  // Calls functions to create 1 or more profiles
@@ -63,7 +66,6 @@ public:
     bool isName();
     bool isEmail();
     bool isPwrd();
-    bool isVoteSiz(int);
     bool isMinSize(string, int size = 2);
     bool isStrEqual(string, string);
     bool hasSpecialChars(string);
@@ -76,8 +78,7 @@ public:
     void reWrtTxt(long);  // Rewrite 1 record in User's text file
     void reWrtBin(long);  // Rewrite 1 record in User's binary file    
     
-    // Accessors 
-    int getVoteSiz() const {return voteSiz;}
+    // Accessors     
     unsigned short getNamSiz() const {return namSiz; }
     unsigned short getEmaiSiz() const { return emaiSiz; }
     unsigned short getPwrdSiz() const {return pwrdSiz;}
