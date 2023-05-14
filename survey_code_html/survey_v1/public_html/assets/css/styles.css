@@ -1,0 +1,47 @@
+* {
+    color: black;
+    text-align: center;
+    font-family: Hello Heartche;
+    url:"https://www.fontspace.com/category/hello%20kitty?";
+}
+
+#gameHeader {
+    font-size: 68px;
+    /* margin-bottom: 20px; */
+    padding-top: 30px;
+}
+body {
+    background-color: grey;
+/*    background-image: url('./../../assets/images/sanrio.png');*/
+    border-image-repeat: no-repeat;
+}
+.container {
+
+    margin:100px auto;
+    background-color: plum;
+    width: 600px;
+    height: 600px;
+    font-size: 32px;
+    
+}
+h2 {
+    margin: 20px auto 5px;
+}
+button {
+    margin: 20px 10px 0;
+    font-size: 36px;
+}
+.question {
+
+    margin: 20px auto 5px;
+}
+.options {
+    margin-bottom: 15px;
+}
+label {
+    padding-right: 10px;
+}
+#timeRemaining {
+    margin:20px;
+    font-size: 50px;
+}
