@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=survey_v6
+PROJECTNAME=survey_cpp_v6
 
 # Active Configuration
 DEFAULTCONF=Debug
