@@ -4,30 +4,36 @@
     <meta charset="utf-8">
     <title>Yahtzee Login / Sign Up Form</title>
     <!--css-->
-    <!--<link rel="shortcut icon" href="/assets/favicon.ico">-->
+    <link rel="shortcut icon" href="./assets/img/favicon.ico">
+<!--    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">-->
     <link rel="stylesheet" href="./assets/css/login.css">   
+    <!--js-->
+    <script type="text/javascript" src="././assets/javascript/login.js"></script>
+    <script type="text/javascript" src="././assets/javascript/cookies.js"></script>   
 </head>
 
 <!-- add ids to all the inputs -->
 
-<body Onload = "main()">
+<body Onload = "main()">    
+    
     <div class="container">
         
-        <!--User Login Account Form-->
-        <form class="form" id="login">
-          
+        <!--User Login Form-->
+        <form class="form" name = "myform1" id="login">          
             <h1 class="form__title">Login</h1>
             <div class="form__message form__message--error"></div>
+            
+            <!--Email Input-->
             <div class="form__input-group">
-                <input type="text" class="form__input" autofocus placeholder="Username or email">
+                <input type="text" class="form__input" name = "email" autofocus placeholder="email">
                 <div class="form__input-error-message"></div>
             </div>
+            <!--Password Input-->
             <div class="form__input-group">
-                <input type="password" class="form__input"  placeholder="Password">
+                <input type="password" class="form__input" name = "password"  placeholder="Password">
                 <div class="form__input-error-message"></div>
             </div>    
-            <button class="form__button" type="submit" onclick="location.href = 'Survey.html'">Continue</button>
-           
+            <button class="form__button" type="submit" onclick="writeCookie(); location.href='Survey.html'">Continue</button><!--           -->
             
             <p class="form__text">
                 <a href="#" class="form__link">Forgot your password?</a>
@@ -39,25 +45,25 @@
 
         
         <!--Create Account Form-->
-        <form class="form form--hidden" id="createAccount" action = "getForm.html" method = "GET">
+        <form class="form form--hidden" id="createAccount" name="myform" action = "getForm.html" method = "GET">
             <h1 class="form__title">Create Account</h1>
             <div class="form__message form__message--error"></div>
             
-            
+            <!--Name Input-->
             <div class="form__input-group">
-                <input  name = "Name" type="text" id="signupUsername" class="form__input"  placeholder="Username">
+                <input  name = "name" type="text" id="signupUsername" class="form__input"  placeholder="Username">
                 <div class="form__input-error-message"></div>
             </div>
             
-            
+            <!--Email Input-->
             <div class="form__input-group">
-                <input name = "Email" type="text" id="signupEmail" class="form__input"  placeholder="Email Address">
+                <input name = "email" type="text" id="signupEmail" class="form__input"  placeholder="Email Address">
                 <div class="form__input-error-message"></div>
             </div>
             
-            
+            <!--Password Input-->
             <div class="form__input-group">
-                <input name = "Password" type="password" id= "signupPassword" class="form__input"  placeholder="Password">
+                <input name = "password" type="password" id= "signupPassword" class="form__input"  placeholder="Password">
                 <div class="form__input-error-message"></div>
             </div>
             
@@ -68,15 +74,14 @@
             </div>
             
             
-            <button class="form__button"  name= "Submit" type="submit">Continue</button>
+            <button class="form__button"  name= "Submit" type="submit" onclick="writeNewUserCookie()">Continue</button>
             
             <p class="form__text">
                 <a class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a>
             </p>
         </form>
     </div>
-    <!--javascript-->
-     <script type= "text/javascript" src="././assets/javascript/login.js"></script>
+   
 </body>
 
 

@@ -1,72 +1,34 @@
-/* 
- 
-*/
 // Votes Variables
-const SIZE = 3;
-
-
-// Default constructor  Called in Yahtzee.html
-function User(){   
-    //this.readNumRec();  
-    this.numRec = 0;
-    this.name="Guest";
-    this.email="email@email.com";
-    this.password="password";  
-    this.votesSiz=SIZE;
-    this.votes = new Array();
-    this.votes = new Votes();
-
-//    votes.setVoteIndx(1, 99);
-//    votes.consoleVotes();
-//    votes.consoleNumVotes();
-//    votes.increVoteIndx(1);
-//    votes.consoleVotes();
-//    votes.consoleNumVotes();
-    console.log("Hit User Default constructor");
-}
-
+var SIZE = 3;
 
 // Constructor #2. Called in Yahtzee.js
 function User(i){   
     //this.readNumRec(); 
-    this.numRec = 0;
+    this.id = i;
     this.name="Guest "+i;
     this.email="email@email.com";
     this.password="password"; 
-    this.votesSiz=SIZE;
+    this.votesSize=SIZE;
     
+    // Aggregate instance of Votes class in User class
     this.votes = new Array();
     this.votes = new Votes();
-
-//    votes.setVoteIndx(1, 99);
     this.votes.consoleVotes();
-//    votes.consoleNumVotes();
-//    votes.increVoteIndx(1);
-//    votes.consoleVotes();
-//    votes.consoleNumVotes();
-    console.log("Hit User constructor #2");
+    //console.log("Hit User constructor #2");
 }
 
-//To String function of the ScoreCard Class
-User.prototype.printUser=function(){
-    console.log("numRec   = " + this.getNumRec());
-    console.log("name     = " + this.getName());
-    console.log("email    = " + this.getEmail());
-    console.log("password = " + this.getPassword());
-    console.log("votesSiz = " + this.getVotesSiz());
-    this.votes.consoleVotes();
-    //console.log(this.votes.callGetVote(0));
-};
-
-User.prototype.callGetVote=function(i){
-    return this.votes.getVote(i);
-};
 
 //*****************************************************
 //                      Mutators
 //*****************************************************
+            
+//      REWRITE 1 Record Database     
+User.prototype.reWrtRecord=function(){
+    console.log("Hit reWrtRecord()");
+};
+
 User.prototype.setNumRec=function(num) { 
-    this.numRec = num; 
+    this.id = num; 
 };
 
 User.prototype.setName=function(str){
@@ -77,20 +39,31 @@ User.prototype.setEmail=function(str){
     this.email = str;
 };
 
-User.prototype.setPassword=function(str){
+User.prototype.setPwrd=function(str){
     this.password = str;
 };
 
-User.prototype.setVotesSiz=function(s) {
-    this.votesSiz = s; 
+User.prototype.setVoteSize=function(s) {
+    this.votesSize = s; 
 };
 
 
 //*****************************************************
 //                      Accessors
 //*****************************************************
+
+//To String function of the ScoreCard Class
+User.prototype.printUser=function(){
+    console.log("id  = " + this.getNumRec()
+    + "\nname = " + this.getName()
+    + "\nemail = " + this.getEmail()
+    + "\npassword = " + this.getPassword()
+    + "\nvotesSize = " + this.getVotesSize());
+    this.votes.consoleVotes();
+};
+
 User.prototype.getNumRec=function(){
-    return this.numRec;
+    return this.id;
 };
 
 User.prototype.getName=function(){
@@ -105,15 +78,6 @@ User.prototype.getPassword=function(){
     return this.name;
 };
 
-User.prototype.getVotesSiz=function(){
-    return this.votesSiz;
-};
-
-
-/******************************************************************/              
-//                  REWRITE 1 RECORD TO BINARY FILE     
-/*****************************************************************/
-
-User.prototype.reWrtRecord=function(){
-    console.log("Hit reWrtRecord()");
+User.prototype.getVotesSize=function(){
+    return this.votesSize;
 };

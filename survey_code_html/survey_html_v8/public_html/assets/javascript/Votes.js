@@ -1,12 +1,12 @@
 // Votes Variables
-const NUMQQ = 3;
-const VOTESIZE = NUMQQ + 1;
+var NUMQQ = 3;
+var VOTESIZE = NUMQQ + 1;
 
 //*********************************************************
 //                    Default Constructor
 //*********************************************************
 function Votes() {
-    console.log('Hit Votes Constructor');
+    //console.log('Hit Votes Constructor');
     this.numVote = 0;
     this.votes = [NUMQQ];
     for (var i = 0; i < NUMQQ; i++) {
@@ -77,12 +77,10 @@ Votes.prototype.getNumVote = function () {
 //*********************************************************
 //                  Print votes array 
 //*********************************************************  
-Votes.prototype.prntVotes = function (){  
-    
-    //var div = document.getElementById("results-container");
-    console.log('votes = [' + this.votes + ' ]');
-    var div = document.getElementById('votesDiv');
-    div.appendChild(this.votes);
+Votes.prototype.prntVotes = function (){      
+    console.log('prntVotes().  votes = [' + this.votes + ' ]');
+    var div = document.getElementById('votes-div');
+    div.append(this.votes);
 };
 
 Votes.prototype.prntNumVotes = function (){  

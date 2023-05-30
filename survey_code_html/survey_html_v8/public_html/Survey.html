@@ -6,49 +6,69 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Home</title>
+        <title>Survey</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- css -->
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
         <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
         <link rel="stylesheet" href="./assets/css/Survey.css" type="text/css" />
+        <!-- js -->
+        <script type="text/javascript" src="./assets/javascript/Survey.js"></script>
+        <script type="text/javascript" src="./assets/javascript/User.js"></script>
+        <script type="text/javascript" src="./assets/javascript/Admin.js"></script>
+        <script type="text/javascript" src="./assets/javascript/Votes.js"></script>
+        <script type= "text/javascript" src="./assets/javascript/cookies.js"></script>   
+        <script type="text/javascript">
+
+
+
+        </script>
     </head>
     <body>
-        <div class="container cont">
+        <div class="container">
             <div class="row row1">
                 <div class="col">
-                    <div id="questions-container"></div>
+                    <div id="questions-div"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                    <div id="results-container">
-                        <div id="votesDiv"></div>
-                        <div id="histogramDiv"></div>
+                    <div id="results-div">
+                        <h1>Survey Results</h1>
+                        <div id="votes-div"></div>
+                        <div id="histogram-div"></div>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- js -->
-        <script type="text/javascript" src="./assets/javascript/Survey.js"></script>
-        <script type="text/javascript" src="./assets/javascript/User.js"></script>
-        <script type="text/javascript" src="./assets/javascript/Votes.js"></script>
         <script type="text/javascript">
-            //window.onload = function () {
 
-                var user = new Array;
-                user = new User;
-                user.setName("Yoshi");
-                user.printUser();
+            document.getElementById('results-div').style.display = 'none';
 
-                
-                var survey = new Array;
-                survey = new Survey(user);
-           // };
+            // SETUP GLOBAL VARIABLES FOR THE PAGE HERE 
+
+            //var cookie = getCookie('email'); // dr. lehr's
+            //console.log('getCookie() email='+ cookie.email);
+
+            var cookie = readCookie();
+            console.log('cookie\nname='+cookie.name+'\nemail='+cookie.email+'\npassword='+cookie.password);
+
+            // Create a Global intance of User object for the page
+//            var user = new Array();
+//            user = new User();
+//            user.setUser(1, cookie.name, cookie.email, cookie.password);
+//            console.log("Hit survey.html");
+//            user.printUser();
+
+
+            // Create instance of Survey class
+            var survey = new Array;
+            //survey = new Survey(user);
+
         </script>
     </body>
 </html>
