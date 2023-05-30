@@ -1,7 +1,5 @@
-
 // Survey Variables
-
-var questions =   // 1 question object array. object with 3 keys & 3 data values
+var questions = // 1 question object array. object with 3 keys & 3 data values
         [{
                 qq: "Which series do you like the most?",
                 answers: ["Star Wars", "The Simpsons", "Harry Potter"]
@@ -17,7 +15,6 @@ var questions =   // 1 question object array. object with 3 keys & 3 data values
         ];
 
 var qqSize = questions.length;
-var localVote = [0, 0, 0];
 
 
 //*********************************************************
@@ -25,14 +22,7 @@ var localVote = [0, 0, 0];
 //*********************************************************
 function Survey(user) {
     this.showQuestions(user);
-    this.isComplete = this.setIsComplete(false);// survey is complete 
-    //console.log('user.votes = ' + user.votes.callGetVote(0));   
-    //console.log('user name: ' + user.getName());
-    //console.log('user votes = ' + user.votes.getVote(0));
-    //user.votes.consoleVotes(); 
-    //user.votes.setVoteIndx(0, 1);
-    //user.votes.consoleVotes();  
-    //this.tallySurvey(user);
+    this.isComplete = false;// survey is complete 
 }
 
 
@@ -41,11 +31,8 @@ function Survey(user) {
 //*********************************************************
 Survey.prototype.tallySurvey = function (user) {
 
-    //alert("Hit tallySurvey()");
     console.log("Hit tallySurvey()");
-    //console.log('user.votes[0] = ' + user.votes.getVote(0));
     //user.votes.consoleVotes();
-   
 
     for (var i = 0; i < qqSize; i++) {
 
@@ -58,28 +45,48 @@ Survey.prototype.tallySurvey = function (user) {
         var value2 = qA2[i].value;
 
         if (qA0[i].checked) {
-            localVote[0] = value0;
-            //console.log('i = ' + i + '  vote[0] = ' + vote[0]);
+            //console.log('value0 = ' value0);
             user.votes.setVoteIndx(0, value0);
-            //user.votes.setVoteIndx(0, value0);
         }
 
         if (qA1[i].checked) {
-            localVote[1] = value1;
-            //console.log('vote[1] = ' + vote[1]);
-            //user.votes.setVoteIndx(1, value1);
+            //console.log('value1 = ' + value1);
             user.votes.setVoteIndx(1, value1);
         }
 
         if (qA2[i].checked) {
-            localVote[2] = value2;
-            //console.log('localVote[2] = ' + localVote[2]);
-            //user.votes.setVoteIndx(2, value2);
+            //console.log('value2 = ' + value2);
             user.votes.setVoteIndx(2, value2);
         }
     }
-    console.log('localVote = ' + localVote);
-    user.votes.consoleVotes();
+
+    //   End of Survey. Show User's results
+    //user.votes.consoleVotes();
+    this.setIsComplete(true);    
+    this.results(user);
+};
+
+
+Survey.prototype.results = function (user) {
+    
+    console.log('Hit results()');
+    
+    if (this.getIsComplete() === true) {
+        
+        user.votes.consoleVotes();
+        document.getElementById('questions-div').style.display = 'none';
+        document.getElementById('results-div').style.display = 'block';
+        user.reWrtRecord(); //rewrite user's record in database
+        console.log("\nUser is updating record in database....");
+        
+        // Create instance of Admin class
+        var admin = new Array();
+        admin = new Admin();
+        //admin.readBin_setArray();
+        console.log("\nAdmin is reading updated database record....\n");
+        //admin.printAdUsr(user.getNumRec());    
+        //admin.printQueSums();
+    }
 };
 
 //*********************************************************
@@ -87,7 +94,10 @@ Survey.prototype.tallySurvey = function (user) {
 //*********************************************************
 Survey.prototype.setIsComplete = function (boolean) {
     this.isComplete = boolean;
-    //console.log("this.isComplete = " + this.isComplete);
+};
+
+Survey.prototype.getIsComplete = function (boolean) {
+    return this.isComplete;
 };
 
 
@@ -100,7 +110,7 @@ Survey.prototype.showQuestions = function (user) {
     console.log("Hit showQuestions()");
 
 
-    var div = document.getElementById("questions-container");
+    var div = document.getElementById("questions-div");
     var form = document.createElement('form');
     form.setAttribute('action', ' ');
     form.setAttribute('id', 'surveyForm');
@@ -143,7 +153,7 @@ Survey.prototype.showQuestions = function (user) {
 
     // Create & append a submit button
     var surveyBtn = this.makeBtn('button', 'submit', 'submit-survey');
-    surveyBtn.setAttribute('onclick','survey.tallySurvey(user)');
+    surveyBtn.setAttribute('onclick', 'survey.tallySurvey(user)');
     form.append(surveyBtn);
 
     //document.getElementById('submit-survey').addEventListener('click', this.tallySurvey);

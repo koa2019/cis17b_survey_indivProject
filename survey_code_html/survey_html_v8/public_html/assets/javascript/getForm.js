@@ -1,8 +1,6 @@
-//Function which retrieves the information
-//in a form
-//Danielle using Dr. Mark E. Lehr
-//Example for CSC/CIS 17B
-//$_GET object as implemented in PHP
+// Function which retrieves the information in a form
+// Danielle using Dr. Mark E. Lehr's Example for CSC/CIS 17B
+// $_GET object as implemented in PHP
 function getForm(url){
     var info=url.split("?");
     var nameValuePairs=info[1].split("&");
