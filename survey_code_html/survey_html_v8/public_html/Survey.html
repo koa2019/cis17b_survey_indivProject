@@ -9,8 +9,8 @@ and open the template in the editor.
         <title>Survey</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- css -->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <!--css-->
+        <link rel="shortcut icon" href="./assets/img/favicon.ico">
         <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
         <link rel="stylesheet" href="./assets/css/Survey.css" type="text/css" />
         <!-- js -->
@@ -50,24 +50,25 @@ and open the template in the editor.
             document.getElementById('results-div').style.display = 'none';
 
             // SETUP GLOBAL VARIABLES FOR THE PAGE HERE 
-
-            //var cookie = getCookie('email'); // dr. lehr's
+            
+            // dr. lehr's example
+            //var cookie = getCookie('email'); 
             //console.log('getCookie() email='+ cookie.email);
 
             var cookie = readCookie();
             console.log('cookie\nname='+cookie.name+'\nemail='+cookie.email+'\npassword='+cookie.password);
 
             // Create a Global intance of User object for the page
-//            var user = new Array();
-//            user = new User();
-//            user.setUser(1, cookie.name, cookie.email, cookie.password);
-//            console.log("Hit survey.html");
-//            user.printUser();
+            var user = new Array();
+            user = new User();
+            user.setUser(1, cookie.name, cookie.email, cookie.password);
+            console.log("Hit survey.html");
+            user.printUser();
 
 
             // Create instance of Survey class
             var survey = new Array;
-            //survey = new Survey(user);
+            survey = new Survey(user);
 
         </script>
     </body>
