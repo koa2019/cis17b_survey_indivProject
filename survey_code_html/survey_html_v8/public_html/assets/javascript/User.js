@@ -17,6 +17,12 @@ function User(i){
     //console.log("Hit User constructor #2");
 }
 
+User.prototype.setUser=function(id, name, email, pwrd){
+    this.setId(id);
+    this.setName(name);
+    this.setEmail(email);
+    this.setPwrd(pwrd);
+};
 
 //*****************************************************
 //                      Mutators
@@ -27,7 +33,7 @@ User.prototype.reWrtRecord=function(){
     console.log("Hit reWrtRecord()");
 };
 
-User.prototype.setNumRec=function(num) { 
+User.prototype.setId=function(num) { 
     this.id = num; 
 };
 

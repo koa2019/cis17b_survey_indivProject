@@ -1,5 +1,68 @@
-// https://www.tutorialspoint.com/javascript/javascript_cookies.htm 
+// Tutorialspoint's cookies Notes: 
+// Cookie values may not include semicolons, commas, or whitespace. 
+// For this reason, you may want to use the JavaScript escape() function 
+// to encode the value before storing it in the cookie. If you do this, 
+// you will also have to use the corresponding unescape() function 
+// when you read the cookie value.
+
+
+//********************************************************
+//          Dr. Lehr's/w3schools examples
+//      https://www.w3schools.com/js/js_cookies.asp
+//********************************************************          
+function getCookie(c_name) {
+    console.log('Hit getCookie()');
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start !== -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end === -1) {
+                c_end = document.cookie.length;
+            }
+            var email = unescape(document.cookie.substring(c_start, c_end));
+            var cookie = {'email': email};
+            return cookie;
+        }
+    }
+    return "";
+}
+
+
+//********************************************************
+//          Dr. Lehr's/w3schools examples
+//      https://www.w3schools.com/js/js_cookies.asp
+//******************************************************** 
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) +
+            ((expiredays === null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+
+//********************************************************
+//          Dr. Lehr's/w3schools examples
+//      https://www.w3schools.com/js/js_cookies.asp
+//******************************************************** 
+function checkCookie() {
+    email = getCookie('email');
+    if (email !== null && email !== "") {
+    } else {
+        email = prompt('Please enter your email:', "");
+        if (email !== null && email !== "") {
+            setCookie('username', email, 365);
+            alert('Welcome ' + email + '!');
+        }
+    }
+}
+
+
+
+//*************************************************************************
+//  Tutorialspoint's cookies        https://www.tutorialspoint.com/javascript/javascript_cookies.htm 
 // Store Cookie. Set multiple cookies using multiple key = value pairs separated by comma.
+//*************************************************************************
 function writeCookie() {
 
     if (document.myform1.email.value === "") {
@@ -25,8 +88,10 @@ function writeCookie() {
 
 
 
-
+//*************************************************************************
+//                      Tutorialspoint's cookies      
 // https://www.tutorialspoint.com/javascript/javascript_cookies.htm 
+//*************************************************************************
 function writeNewUserCookie() {
     
     alert("Hit writeNewUserCookie()");
@@ -58,10 +123,13 @@ function writeNewUserCookie() {
     console.log("Setting Cookies : " + "name=" + cookievalue1 + "email=" + cookievalue2 + "password=" + cookievalue3);
 }
 
+//*************************************************************************
+//                      Tutorialspoint's cookies      
 // https://www.tutorialspoint.com/javascript/javascript_cookies.htm 
 // document.cookie string will keep a list of name=value pairs separated by semicolons, 
 // where name is the name of a cookie and value is its string value.
 // You can use strings' split() function to break a string into key and values as follows 
+//*************************************************************************
 function readCookie() {
     
     var allcookies = document.cookie;
@@ -100,46 +168,21 @@ function readCookie() {
     return "";
 }
 
-
-//********************************************************
-//          Dr. Lehr's/w3schools examples
-//      https://www.w3schools.com/js/js_cookies.asp
-//********************************************************          
-function getCookie(c_name) {
-    console.log('Hit getCookie()');
-    if (document.cookie.length > 0) {
-        c_start = document.cookie.indexOf(c_name + "=");
-        if (c_start !== -1) {
-            c_start = c_start + c_name.length + 1;
-            c_end = document.cookie.indexOf(";", c_start);
-            if (c_end === -1) {
-                c_end = document.cookie.length;
-            }
-            var email = unescape(document.cookie.substring(c_start, c_end));
-            var cookie = {'email': email};
-            return cookie;
-        }
-    }
-    return "";
-}
-
-// https://www.w3schools.com/js/js_cookies.asp
-function setCookie(c_name, value, expiredays) {
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + expiredays);
-    document.cookie = c_name + "=" + escape(value) +
-            ((expiredays === null) ? "" : ";expires=" + exdate.toGMTString());
-}
-
-// https://www.w3schools.com/js/js_cookies.asp
-function checkCookie() {
-    email = getCookie('email');
-    if (email !== null && email !== "") {
-    } else {
-        email = prompt('Please enter your email:', "");
-        if (email !== null && email !== "") {
-            setCookie('username', email, 365);
-            alert('Welcome ' + email + '!');
-        }
-    }
+//*************************************************************************
+//                      Tutorialspoint's cookies      
+// https://www.tutorialspoint.com/javascript/javascript_cookies.htm 
+//*************************************************************************
+function readAllCookies() {
+               var allcookies = document.cookie;
+               document.write ("All Cookies : " + allcookies );
+               
+               // Get all the cookies pairs in an array
+               cookiearray = allcookies.split(';');
+               
+               // Now take key value pair out of this array
+               for(var i=0; i<cookiearray.length; i++) {
+                  name = cookiearray[i].split('=')[0];
+                  value = cookiearray[i].split('=')[1];
+                  document.write ("Key is : " + name + " and Value is : " + value);
+               }
 }
